@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/reset-css.css"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/style3.css"/>
+    <link rel="stylesheet" href="/css/profile.css"/>
+    <title>Internal Server Error</title>
+
+</head>
+<header th:replace="~{fragments/commons::nav}"></header>
+<body>
+
+<main>
+    <section id="collection">
+        <div class="game-card">
+            <div class="card-image">
+                <img th:src="${user.getImageUrl()}" alt="User Image" class="preview">
+            </div>
+            <div class="card-content">
+                <h2 class="card-title">Username: <span th:text="${user.getUsername()}" class="user-text">john_doe</span></h2>
+                <p class="card-description">First Name: <span th:text="${user.getFirstName()}" class="user-text">John</span></p>
+                <p class="card-description">Last Name: <span th:text="${user.getLastName()}" class="user-text">Doe</span></p>
+                <p class="card-description">Role: <span th:text="${user.getRole()}" class="user-text">Admin</span></p>
+                <p class="card-description">
+                    Status:
+                    <span class="status-indicator"></span>
+                    <!-- Смените класа между active-status/inactive-status за промяна на статуса -->
+                    <span th:if="${user.isActive()}" class="active-status">Active</span>
+                    <span th:if="${!user.isActive()}" class="inactive-status">Inactive</span>
+                </p>
+            </div>
+            <div class="card-actions">
+                <a th:href="@{/edit-profile}" class="card-button">Edit Profile</a>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer bg-transparent py-2">
+    <div class="container-fluid text-center">
+        <div class="footer-background footer-text fixed-bottom">
+            &copy; Borislav team 2025. Best card game.
+        </div>
+    </div>
+</footer>
+</body>
+</html>

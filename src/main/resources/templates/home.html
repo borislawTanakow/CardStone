@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/commons::head}"></head>
+<body>
+<header th:replace="~{fragments/commons::nav}"></header>
+<main>
+    <div class="welcome mt-1 mb-4">
+        <p class="mySticky bg-gray text-dark user" th:text="${'Welcome, ' + user.username}"></p>
+        <div class="row mt-1 mb-2">
+            <div class="col-6 mt-1 mb-1">
+                <div>
+                    <div class="home-fields" style="height: 80vh; overflow: auto">
+                        <h3 class="my-stamps">My Deck</h3>
+                        <table class="my-table table-striped table-dark">
+                            <tr th:each="card : ${user.deck.cards}" class="my-stamps">
+                                <td>
+                                    <img th:src="${card.imageUrl}"
+                                         alt="The Queen" width="70px"
+                                         height="70px">
+                                </td>
+                                <td class="my-cell-container">
+                                    <div>Name: <span th:text="${card.name}"></span></div>
+                                    <div>Description: <span th:text="${card.description}"></span></div>
+                                <div>
+                                    <span th:text="'Power: ' + ${#numbers.formatInteger(card.power, 0)}"></span>
+                                    <span th:text="'Health: ' + ${#numbers.formatInteger(card.health, 0)}"></span>
+                                </div>
+                                    <div>Card type: <span th:text="${card.type}"></span></div>
+                                    <form th:action="@{'/cards/deck/' + ${card.id}}"
+                                          th:method="DELETE">
+                                        <button class="btn-danger btn">Remove</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 mt-1 mb-1">
+                <div class="home-fields" style="height: 40vh; overflow: auto">
+                    <h3 class="profiles">All other Players</h3>
+                    <ul class="list-group list-group-vertical text-dark">
+                        <li th:each="systemUsers : ${allUsers}"
+                            th:if="${systemUsers != null and systemUsers.id != user.id}">
+                            <!-- Вашето съдържание тук -->
+                            <div class="my-Users-first-row">
+                                <div class="img1">
+                                    <img id="image" width="85px"
+                                         th:src="${systemUsers.imageUrl}"
+                                         alt="US Mail"
+                                         height="85" style="padding-top: 0.3em; padding-left: 0.3em; margin-top: 2.3em">
+                                </div>
+                                <div class="user-info">
+                                    <p class="user-text">
+                                        UserName: <span th:text="${systemUsers.username}"></span>
+                                    </p>
+                                    <p class="user-text">
+                                        Name: <span th:text="${systemUsers.getFirstName()}"></span> <span th:text="${systemUsers.getLastName()}"></span>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </li>
+                    </ul>
+                </div>
+                <div class="home-fields" style="height: 39vh; overflow: auto">
+                    <h3 class="my-cards">MyCards!</h3>
+                    <div class="card-list">
+                        <table class="my-table my-wishlist">
+                            <tr th:each="card : ${user.cardToBuys}"
+                                    class="my-stamps">
+                                <td>
+                                    <img th:src="${card.imageUrl}" alt="US Mail" width="55px" height="55" style="padding-top: 0.3em; padding-left: 0.3em">
+
+                                </td>
+                                <td th:text="${card.name}"></td>
+                                <td th:text="'Power: ' + ${#numbers.formatInteger(card.power, 0)}"></td>
+                                <td th:text="'Health: ' + ${#numbers.formatInteger(card.health, 0)}"></td>
+<!--                                <td style="width: 15%; padding-top: 8px; padding-right: 5px">-->
+<!--                                    <form th:action="@{'/cards/' + ${card.id}}"-->
+<!--                                          th:method="DELETE">-->
+<!--                                        <button class="btn-danger btn">Remove</button>-->
+<!--                                    </form>-->
+<!--                                </td>-->
+                            </tr >
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer class="footer bg-transparent py-2">
+    <div class="container-fluid text-center">
+        <div class="footer-background footer-text fixed-bottom">
+            &copy; Borislav team 2025. Best card game.
+        </div>
+    </div>
+</footer>
+</body>
+</html>

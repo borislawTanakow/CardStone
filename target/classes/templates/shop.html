@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/commons::head}"></head>
+<body>
+<header th:replace="~{fragments/commons::nav}"></header>
+
+<main>
+    <div class="welcome mt-1 mb-4">
+        <p class="mySticky bg-gray text-dark user" th:text="${'Welcome, ' + user.username}"></p>
+
+
+        <div class="row mt-1 mb-2">
+            <!-- Gold Collection -->
+            <div class="col-4 mt-1 mb-1">
+                <div class="home-fields" style="height: 80vh; overflow: auto">
+                    <h3 class="my-stamps">Gold Collection</h3>
+                    <table class="my-table table-striped table-dark">
+                        <tr th:each="systemCards : ${goldCards}" class="my-stamps">
+                            <td>
+                                <img th:src="${systemCards.imageUrl}" alt="Gold Card" width="70px" height="70px">
+                            </td>
+                            <td class="my-cell-container">
+                                <div th:text="${systemCards.name}">Name: Golden Dragon</div>
+                                <div th:text="${systemCards.description}">Description: A rare golden dragon card.</div>
+                                <div>Card type: Gold</div>
+                            </td>
+                            <td>
+                                <div class="buttons-info">
+                                    <div class="cards">
+                                        <form
+                                                th:action="@{'/cards/buy-card/' + ${systemCards.id}}"
+                                                th:method="POST">
+                                            <button class="btn-outline-info btn">To Buy</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Rare Collection -->
+            <div class="col-4 mt-1 mb-1">
+                <div class="home-fields" style="height: 80vh; overflow: auto">
+                    <h3 class="my-stamps">Rare Collection</h3>
+                    <table class="my-table table-striped table-dark">
+                        <tr th:each="systemCards : ${rearCards}" class="my-stamps">
+                            <td>
+                                <img th:src="${systemCards.imageUrl}" alt="Rare Card" width="70px" height="70px">
+                            </td>
+                            <td class="my-cell-container">
+                                <div  th:text="${systemCards.name}">Name: Mystic Phoenix</div>
+                                <div  th:text="${systemCards.description}">Description: A rare phoenix card with mystical powers.</div>
+                                <div>Card type: Rare</div>
+                            </td>
+                            <td>
+                                <div class="buttons-info">
+                                    <div class="cards">
+                                        <form
+                                                th:action="@{'/cards/buy-card/' + ${systemCards.id}}"
+                                                th:method="POST">
+                                            <button class="btn-outline-info btn">To Buy</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Regular Collection -->
+            <div class="col-4 mt-1 mb-1">
+                <div class="home-fields" style="height: 80vh; overflow: auto">
+                    <h3 class="my-stamps">Regular Collection</h3>
+                    <table class="my-table table-striped table-dark">
+                        <tr th:each="systemCards : ${commonCards}" class="my-stamps">
+                            <td>
+                                <img th:src="${systemCards.imageUrl}" alt="Regular Card" width="70px" height="70px">
+                            </td>
+                            <td class="my-cell-container">
+                                <div th:text="${systemCards.name}">Name: Brave Knight</div>
+                                <div th:text="${systemCards.description}">Description: A common knight card for beginner decks.</div>
+                                <div>Card type: Regular</div>
+                            </td>
+                            <td>
+                                <div class="buttons-info">
+                                    <div class="cards">
+                                        <form
+                                                th:action="@{'/cards/buy-card/' + ${systemCards.id}}"
+                                                th:method="POST">
+                                            <button class="btn-outline-info btn">To Buy</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="footer bg-transparent py-2">
+    <div class="container-fluid text-center">
+        <div class="footer-background footer-text fixed-bottom">
+            &copy; Borislav team 2025. Best card game.
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

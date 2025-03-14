@@ -1,0 +1,101 @@
+/* Стилизация за секцията с грешката */
+.payment-result-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.payment-header .icon {
+    margin-bottom: 20px;
+}
+
+.payment-header h2 {
+    font-size: 2.5em;
+    color: #ffffff;
+    margin-bottom: 0.5em;
+}
+
+.payment-header p {
+    font-size: 1.2em;
+    color: #d1d1d1;
+    line-height: 1.6;
+    max-width: 600px;
+}
+
+.details-section-container {
+    margin-top: 20px;
+    color: #fff;
+}
+
+.details-section-container strong {
+    color: red;
+    font-weight: bold;
+}
+
+.profile-actions-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 30px;
+    padding: 12px 24px;
+    background: #4a6a7c;
+    color: white;
+    font-size: 1.1em;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+.profile-actions-button:hover {
+    background: #27414d;
+}
+
+.profile-actions-button svg {
+    width: 24px;
+    height: 24px;
+}
+.internal-server-error {
+    background-color: darkgreen;
+    color: wheat;
+    border-radius: 16px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.internal-server-error .icon {
+    margin-bottom: 20px;
+}
+
+.internal-server-error h2 {
+    font-size: 32px;
+    margin-bottom: 16px;
+}
+
+.internal-server-error p {
+    font-size: 18px;
+    margin-bottom: 24px;
+}
+
+.profile-actions-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 24px;
+    background-color: wheat;
+    color: darkgreen;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.profile-actions-button:hover {
+    background-color: #FFE0B2;
+}

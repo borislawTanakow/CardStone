@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>StoneCard App</title>
+    <link rel="stylesheet" href="/css/reset-css.css"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/style3.css"/>
+</head>
+<body>
+<header>
+    <nav>
+        <div class="home">
+            <a th:unless="${user}" th:href="@{/home}">StoneHard App</a>
+            <a th:unless="${user}" th:href="@{/cards/new}">Add CardToDeck</a>
+            <a href="/">My Deck</a>
+            <a th:unless="${user}" th:href="@{/my-cards}">My Cards</a>
+            <a th:unless="${user}" th:href="@{/shop}">Shop</a>
+            <a href="/">Battle</a>
+        </div>
+        <div class="links">
+            <li>
+                <a th:href="@{/logout}">Logout</a>
+            </li>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <div class="home-fields" style="height: 80vh; overflow: auto">
+        <div class="cards-grid">
+            <div th:each="systemCards : ${allMyCards}" class="game-card">
+                <div class="card-image">
+                    <img th:src="${systemCards.imageUrl}" alt="Card">
+                </div>
+
+                <div class="card-content">
+                    <h3 class="card-title" th:text="${systemCards.name}"></h3>
+                    <p class="card-description" th:text="${systemCards.description}"></p>
+                </div>
+
+                <div class="card-actions">
+                    <form th:action="@{'/cards/add-to-deck/' + ${systemCards.id}}" method="POST"  style="margin-bottom: 8px;">
+                        <button class="card-button">Add to Deck</button>
+                    </form>
+                </div>
+
+                <div class="card-actions">
+                    <form th:action="@{'/cards/' + ${systemCards.id}}"
+                          th:method="DELETE">
+                        <button class="btn-danger btn">Remove</button>
+                    </form>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="footer bg-transparent py-2">
+    <div class="container-fluid text-center">
+        <div class="footer-background footer-text fixed-bottom">
+            &copy; Borislav Team 2025. Best card game.
+        </div>
+    </div>
+</footer>
+</body>
+</html>
