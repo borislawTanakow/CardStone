@@ -29,17 +29,12 @@ public class Card extends BaseModel {
     private double power;
 
     @Column
-    private double defence;
-
-    @Column
-    private double health;
-
-    @Column
     @Enumerated(EnumType.STRING)
     private Type type;
 
     @Column
-    private boolean status;
+    private Integer price;
+
 
 
 

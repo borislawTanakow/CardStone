@@ -19,45 +19,13 @@ public class CardServiceImpl implements CardService {
 
 
     private final CardRepository cardRepository;
-    private final DeckRepository deckRepository;
-    private final UserRepository userRepository;
 
-    public CardServiceImpl(CardRepository cardRepository, DeckRepository deckRepository, UserRepository userRepository) {
+    public CardServiceImpl(CardRepository cardRepository) {
         this.cardRepository = cardRepository;
-        this.deckRepository = deckRepository;
-        this.userRepository = userRepository;
     }
 
 
-    @Override
-    @Transactional
-    public void createNewCard(EditProfileRequest createCardRequest, User user) {
 
-//        Card card = Card.builder()
-//                .name(createCardRequest.getName())
-//                .description(createCardRequest.getDescription())
-//                .type(createCardRequest.getType())
-//                .imageUrl(createCardRequest.getImageUrl())
-//                .power(100)
-//                .defence(0)
-//                .health(100)
-//                .build();
-//
-//        List<Card> cards = user.getDeck().getCards();
-//        Deck userDeck = user.getDeck();
-//
-//
-//
-//        userDeck.setOwner(user);
-//        user.setDeck(userDeck);
-//        card.setDeck(userDeck);
-//
-//        cards.add(card);
-//
-//
-//        // 4. Запазване на промените
-//        userRepository.save(user); // Каскадно запазване на колодата и картите (ако е конфигурирано)
-    }
 
     @Override
     public List<Card> getAllCard() {

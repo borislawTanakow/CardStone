@@ -43,6 +43,8 @@ public class User {
 
     private boolean isActive;
 
+    private Integer stoneCoin;
+
     @OneToOne(cascade = CascadeType.ALL)
     private Deck deck;
 }

@@ -21,10 +21,8 @@
                                 </td>
                                 <td class="my-cell-container">
                                     <div>Name: <span th:text="${card.name}"></span></div>
-                                    <div>Description: <span th:text="${card.description}"></span></div>
                                 <div>
                                     <span th:text="'Power: ' + ${#numbers.formatInteger(card.power, 0)}"></span>
-                                    <span th:text="'Health: ' + ${#numbers.formatInteger(card.health, 0)}"></span>
                                 </div>
                                     <div>Card type: <span th:text="${card.type}"></span></div>
                                     <form th:action="@{'/cards/deck/' + ${card.id}}"
@@ -60,7 +58,13 @@
                                         Name: <span th:text="${systemUsers.getFirstName()}"></span> <span th:text="${systemUsers.getLastName()}"></span>
                                     </p>
                                 </div>
-                            </div>
+                                <div class="buttons-info">
+                                    <div class="cards">
+                                        <form th:action="@{'/battle/' + ${systemUsers.getId()}}" th:method="GET">
+                                            <button class="btn-outline-info btn">BATTLE</button>
+                                        </form>
+                                    </div>
+                                </div>
 
                         </li>
                     </ul>
@@ -77,7 +81,6 @@
                                 </td>
                                 <td th:text="${card.name}"></td>
                                 <td th:text="'Power: ' + ${#numbers.formatInteger(card.power, 0)}"></td>
-                                <td th:text="'Health: ' + ${#numbers.formatInteger(card.health, 0)}"></td>
 <!--                                <td style="width: 15%; padding-top: 8px; padding-right: 5px">-->
 <!--                                    <form th:action="@{'/cards/' + ${card.id}}"-->
 <!--                                          th:method="DELETE">-->

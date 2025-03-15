@@ -33,12 +33,6 @@ public class MyCard extends BaseModel {
     private double power;
 
     @Column
-    private double defence;
-
-    @Column
-    private double health;
-
-    @Column
     @Enumerated(EnumType.STRING)
     private Type type;
 

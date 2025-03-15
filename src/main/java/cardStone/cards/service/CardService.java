@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface CardService {
-    void createNewCard(EditProfileRequest createCardRequest, User user);
+
 
     List<Card> getAllCard();
     Card getById(UUID cardId);

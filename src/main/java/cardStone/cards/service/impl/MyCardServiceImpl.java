@@ -34,8 +34,6 @@ public class MyCardServiceImpl implements MyCardService {
                 .owner(user)
                 .imageUrl(card.getImageUrl())
                 .power(card.getPower())
-                .health(card.getHealth())
-                .defence(card.getDefence())
                 .type(card.getType())
                 .build();
 

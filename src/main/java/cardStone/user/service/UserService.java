@@ -63,6 +63,7 @@ public class UserService implements UserDetailsService {
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .isActive(true)
                 .role(RoleEnum.USER)
+                .stoneCoin(50)
                 .build();
 
         Deck deck = Deck.builder().build();

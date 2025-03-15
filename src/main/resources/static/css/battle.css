@@ -1,0 +1,128 @@
+/* Стилове за страницата */
+.w-15 {
+    width: 15%;
+}
+
+.bg-gray {
+    background-color: #e9ecef;
+}
+
+.bg-nav {
+    background-color: rgba(1, 141, 8, 0);
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    backdrop-filter: blur(20px);
+    font-size: 1.4em;
+    font-weight: bold;
+    display: flex;
+    box-shadow: 2px 2px 8px #b5b9bd;
+    z-index: 10;
+}
+
+nav a {
+    color: #acafb2;
+}
+
+nav .home {
+    padding: 0.5em 1em;
+    flex: 1 0 50%;
+}
+
+nav .links {
+    display: flex;
+    text-decoration: none;
+    list-style-type: none;
+    justify-content: end;
+    padding: 0.5em;
+    flex: 0 1 50%;
+}
+
+nav > .home > a {
+    padding-left: 1em;
+}
+
+body > nav > div.links > li {
+    padding-right: 1em;
+}
+
+body {
+    background-image: url(/img/bg.jpg);
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-bottom: 5rem;
+}
+
+main {
+    padding-top: 60px;
+}
+
+textarea {
+    resize: none;
+}
+
+.welcome {
+    position: relative;
+    border-radius: 12px;
+    margin-top: 8em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    padding: 1em;
+    background-color: rgb(115, 116, 117);
+    max-width: 1340px;
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto;
+    box-shadow: 0 4px 16px #383838;
+    z-index: 1;
+}
+
+.battle-section {
+    margin-top: 2em;
+    text-align: center;
+}
+
+.duel-buttons {
+    margin-top: 2em;
+}
+
+.card-button {
+    background-color: rgb(74, 106, 124);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+}
+
+.card-button:hover {
+    background-color: rgb(39, 63, 77);
+}
+
+.bg-blur {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    font-weight: bold;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    z-index: 2;
+    width: 50%;
+    margin: 0 auto;
+    display: none;
+}
+
+.footer-text {
+    color: white;
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+/* Допълнителни стилове за текст на потребителя */
+.user-text {
+    color: black;
+    font-size: 1.1em;
+}
