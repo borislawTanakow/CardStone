@@ -19,7 +19,6 @@
             <a th:if="${user}" th:href="@{/edit-profile}">Edit Profile</a>
             <a th:if="${user}" th:href="@{/my-cards}">My Cards</a>
             <a th:if="${user}" th:href="@{/shop}">Shop</a>
-            <a th:if="${user}" th:href="@{/battle}">Battle</a>
         </div>
         <div class="links">
             <li th:unless="${user}">
@@ -31,8 +30,16 @@
             </li>
 
             <li th:if="${user}">
+                <a th:href="@{/users}">Admin Users</a>
+            </li>
+
+            <li th:if="${user}">
                 <a th:href="@{/logout}">Logout</a>
             </li>
+
+
+
+
         </div>
     </nav>
 </header>

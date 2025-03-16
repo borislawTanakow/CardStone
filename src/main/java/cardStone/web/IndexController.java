@@ -18,12 +18,10 @@ import org.springframework.web.servlet.ModelAndView;
 public class IndexController {
 
     private final UserService userService;
-    private final CardService cardService;
 
     @Autowired
-    public IndexController(UserService userService, CardService cardService) {
+    public IndexController(UserService userService) {
         this.userService = userService;
-        this.cardService = cardService;
 
     }
 

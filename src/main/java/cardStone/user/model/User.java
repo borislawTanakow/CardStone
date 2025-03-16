@@ -39,7 +39,10 @@ public class User {
     @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
     private List<MyCard> cardToBuys;
 
+    @Column
+    @Enumerated(EnumType.STRING)
     private RoleEnum role;
+
 
     private boolean isActive;
 

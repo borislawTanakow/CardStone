@@ -6,6 +6,7 @@ import cardStone.deck.repository.DeckRepository;
 import cardStone.exception.EmailAlreadyExistException;
 import cardStone.exception.UsernameAlreadyExistException;
 import cardStone.security.AuthenticationMetadata;
+import cardStone.user.model.RankEnum;
 import cardStone.user.model.RoleEnum;
 import cardStone.user.model.User;
 import cardStone.user.repository.UserRepository;
@@ -13,6 +14,7 @@ import cardStone.web.dto.EditProfileRequest;
 import cardStone.web.dto.RegisterRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -42,7 +44,7 @@ public class UserService implements UserDetailsService {
 
         User user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User with this username does not exist."));
 
-        return new AuthenticationMetadata(user.getId(), username, user.getPassword());
+        return new AuthenticationMetadata(user.getId(), username, user.getPassword(), user.getRole(), user.isActive());
     }
 
     public void registerUser(RegisterRequest registerRequest) {
@@ -63,6 +65,7 @@ public class UserService implements UserDetailsService {
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .isActive(true)
                 .role(RoleEnum.USER)
+//                .rank(RankEnum.SILVER)
                 .stoneCoin(50)
                 .build();
 
@@ -102,5 +105,28 @@ public class UserService implements UserDetailsService {
 
         userRepository.save(editUser);
 
+    }
+
+    @CacheEvict(value = "users", allEntries = true)
+    public void switchStatus(UUID userId) {
+
+        User user = getById(userId);
+
+        user.setActive(!user.isActive());
+        userRepository.save(user);
+    }
+
+    @CacheEvict(value = "users", allEntries = true)
+    public void switchRole(UUID userId) {
+
+        User user = getById(userId);
+
+        if (user.getRole() == RoleEnum.USER) {
+            user.setRole(RoleEnum.ADMIN);
+        } else {
+            user.setRole(RoleEnum.USER);
+        }
+
+        userRepository.save(user);
     }
 }

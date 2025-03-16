@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Winner</title>
+  <link rel="stylesheet" href="/css/reset-css.css"/>
+  <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="/css/style3.css"/>
+  <link rel="stylesheet" href="/css/winner.css"/>
+</head>
+<header>
+</header>
+<body>
+
+<main>
+  <section id="winner">
+    <div class="game-card">
+      <h1>WINNER</h1>
+      <div class="card-image">
+        <img th:src="${winner.getImageUrl()}" alt="Winner Image" class="preview">
+      </div>
+      <div class="card-content">
+        <h1 class="card-title">Winner: <span th:text="${winner.getUsername()}" class="user-text">Jane_Doe</span></h1>
+        <p class="card-description">Rank: <span class="user-text">Gold</span></p>
+        <p class="card-description">First Name: <span th:text="${winner.getFirstName()}" class="user-text">Jane</span></p>
+        <p class="card-description">Last Name: <span th:text="${winner.getLastName()}" class="user-text">Doe</span></p>
+        <p class="card-description">YOU WIN: <span class="user-text">50cs</span></p>
+
+      </div>
+      <div class="card-actions">
+        <a th:href="@{/home}" class="card-button">Go Home</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer bg-transparent py-2">
+  <div class="container-fluid text-center">
+    <div class="footer-background footer-text fixed-bottom">
+      &copy; Borislav team 2025. Best card game.
+    </div>
+  </div>
+</footer>
+</body>
+</html>

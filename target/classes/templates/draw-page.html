@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Draw</title>
+    <link rel="stylesheet" href="/css/reset-css.css"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/style3.css"/>
+    <link rel="stylesheet" href="/css/winner.css"/>
+</head>
+<header>
+</header>
+<body>
+
+<main>
+    <section id="draw">
+        <div class="game-card">
+            <h1>DRAW</h1>
+            <div class="card-image">
+                <img src="https://i.ytimg.com/vi/O4XMV9UPhU0/maxresdefault.jpg" alt="Draw Image" class="preview">
+            </div>
+            <div class="card-content">
+                <h2 class="card-title">It's a Draw!</h2>
+                <p class="card-description">Both players have an equal score.</p>
+            </div>
+            <div class="card-actions">
+                <a th:href="@{/home}" class="card-button">Go Back</a> <!-- Линк към началната страница -->
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer bg-transparent py-2">
+    <div class="container-fluid text-center">
+        <div class="footer-background footer-text fixed-bottom">
+            &copy; Borislav team 2025. Best card game.
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+/* Стилизация за таблицата */
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #2c3e50; /* Тъмен фон */
+    color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: left;
+}
+
+.styled-table th, .styled-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.styled-table thead {
+    background: #34495e;
+    text-transform: uppercase;
+}
+
+.styled-table tbody tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Подобрени бутони */
+.profile-actions-button {
+    background: #2980b9;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background 0.3s ease;
+}
+
+.profile-actions-button:hover {
+    background: #1c5985;
+}
+
+/* Статуси */
+.status {
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.status.active {
+    background: #2ecc71;
+    color: white;
+}
+
+.status.terminated {
+    background: #e74c3c;
+    color: white;
+}
+
+/* Обща стилизация на страницата */
+body {
+    font-family: 'Arial', sans-serif;
+    background: #ecf0f1;
+    color: #2c3e50;
+    margin: 0;
+}
+
+main {
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+.subscriptions-container {
+    width: 90%;
+    max-width: 1200px;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
