@@ -3,7 +3,37 @@
       xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/commons::head}"></head>
 <body>
-<header th:replace="~{fragments/commons::nav}"></header>
+<header>
+    <nav>
+        <div class="home">
+            <a th:if="${user}" th:href="@{/home}">StoneHard App</a>
+            <a th:unless="${user}" th:href="@{/home}">StoneHard App</a>
+            <a th:if="${user}" th:href="@{/profile}">Profile</a>
+            <a th:if="${user}" th:href="@{/edit-profile}">Edit Profile</a>
+            <a th:if="${user}" th:href="@{/my-cards}">My Cards</a>
+            <a th:if="${user}" th:href="@{/shop}">Shop</a>
+            <a th:if="${isAdmin}" th:href="@{/users}">Admin Users</a>
+        </div>
+        <div class="links">
+            <li th:unless="${user}">
+                <a th:href="@{/login}">Login</a>
+            </li>
+
+            <li th:unless="${user}">
+                <a th:href="@{/register}">Register</a>
+            </li>
+
+
+            <li th:if="${user}">
+                <a th:href="@{/logout}">Logout</a>
+            </li>
+
+
+
+
+        </div>
+    </nav>
+</header>
 <main>
     <div class="welcome mt-1 mb-4">
         <p class="mySticky bg-gray text-dark user" th:text="${'Welcome, ' + user.username}"></p>

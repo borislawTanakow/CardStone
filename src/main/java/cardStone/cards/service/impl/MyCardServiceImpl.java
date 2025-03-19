@@ -2,7 +2,7 @@ package cardStone.cards.service.impl;
 
 import cardStone.cards.model.Card;
 import cardStone.cards.model.MyCard;
-import cardStone.cards.repository.CardToBuyRepository;
+import cardStone.cards.repository.MyCardRepository;
 import cardStone.cards.service.CardService;
 import cardStone.cards.service.MyCardService;
 import cardStone.deck.model.Deck;
@@ -16,11 +16,11 @@ import java.util.UUID;
 public class MyCardServiceImpl implements MyCardService {
 
     private final CardService cardService;
-    private final CardToBuyRepository cardToBuyRepository;
+    private final MyCardRepository myCardRepository;
 
-    public MyCardServiceImpl(CardService cardService, CardToBuyRepository cardToBuyRepository) {
+    public MyCardServiceImpl(CardService cardService, MyCardRepository myCardRepository) {
         this.cardService = cardService;
-        this.cardToBuyRepository = cardToBuyRepository;
+        this.myCardRepository = myCardRepository;
     }
 
     @Override
@@ -37,34 +37,34 @@ public class MyCardServiceImpl implements MyCardService {
                 .type(card.getType())
                 .build();
 
-        cardToBuyRepository.save(cardToBuy);
+        myCardRepository.save(cardToBuy);
 
     }
 
     @Override
-    public void deleteCardToBuyById(UUID id) {
-        cardToBuyRepository.deleteById(id);
+    public void deleteMyCardById(UUID id) {
+        myCardRepository.deleteById(id);
 
     }
 
     @Override
     public void deleteCardOnMyDeck(UUID cardId, UUID userId) {
-        Optional<MyCard> optionalCard = cardToBuyRepository.findById(cardId);
+        Optional<MyCard> optionalCard = myCardRepository.findById(cardId);
 
         optionalCard.get().setDeck(null);
-        cardToBuyRepository.save(optionalCard.get());
+        myCardRepository.save(optionalCard.get());
     }
 
 
     @Override
     public void addCardToDeck(UUID cardId, User user) {
-        Optional<MyCard> optionalCard = cardToBuyRepository.findById(cardId);
+        Optional<MyCard> optionalCard = myCardRepository.findById(cardId);
         MyCard card = optionalCard.get();
         Deck userDeck = user.getDeck();
         card.setDeck(userDeck);
 
 
-        cardToBuyRepository.save(card);
+        myCardRepository.save(card);
 
     }
 

@@ -42,7 +42,7 @@ public class CardController {
     @DeleteMapping("/{id}")
     public String deleteCardToBuy(@PathVariable UUID id) {
 
-        myCardService.deleteCardToBuyById(id);
+        myCardService.deleteMyCardById(id);
 
         return "redirect:/home";
     }

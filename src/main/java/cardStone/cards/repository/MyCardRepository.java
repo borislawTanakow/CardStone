@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 @Repository
-public interface CardToBuyRepository extends JpaRepository<MyCard, UUID> {
+public interface MyCardRepository extends JpaRepository<MyCard, UUID> {
 }

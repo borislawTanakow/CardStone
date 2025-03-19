@@ -2,6 +2,7 @@ package cardStone.web;
 
 import cardStone.cards.model.MyCard;
 import cardStone.security.AuthenticationMetadata;
+import cardStone.user.model.RoleEnum;
 import cardStone.user.model.User;
 import cardStone.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +28,15 @@ public class HomeController {
 
         User user = userService.getById(authenticationMetadata.getUserId());
         List<User> allUsers = this.userService.getAllUsers();
+        RoleEnum role = user.getRole();
+        boolean isAdmin = role == RoleEnum.ADMIN;
+
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("home");
         modelAndView.addObject("user", user);
         modelAndView.addObject("allUsers", allUsers);
+        modelAndView.addObject("isAdmin", isAdmin);
 
         return modelAndView;
     }
