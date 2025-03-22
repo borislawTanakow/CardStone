@@ -73,7 +73,16 @@ public class IndexController {
     }
 
 
+    @GetMapping("/match-history")
+    public ModelAndView getHistory() {
 
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("match-history");
+
+
+        return modelAndView;
+    }
 
 
 
