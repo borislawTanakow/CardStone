@@ -7,6 +7,7 @@ import cardStone.cards.repository.MyCardRepository;
 import cardStone.cards.service.CardService;
 import cardStone.cards.service.impl.MyCardServiceImpl;
 import cardStone.deck.model.Deck;
+import cardStone.exception.BuyCardException;
 import cardStone.user.model.User;
 import cardStone.user.service.UserService;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -39,7 +39,7 @@ public class MyCardServiceUTest {
     private MyCardServiceImpl myCardService;
 
     @Test
-    public void testCreateCardToBuy() {
+    public void testCreateCardToBuy() throws BuyCardException {
         // Подготвяме тестови данни
         UUID cardId = UUID.randomUUID();
         User user = new User();
@@ -66,7 +66,7 @@ public class MyCardServiceUTest {
                 .build();
 
         // Извикваме метода за създаване на карта за покупка
-        myCardService.createCardToBuy(cardId, user);
+        myCardService.buyCard(cardId, user);
 
         // Проверяваме дали save е бил извикан с правилния обект
         verify(myCardRepository, times(1)).save(expectedCardToBuy);
@@ -76,9 +76,10 @@ public class MyCardServiceUTest {
     public void testDeleteCardToBuyById() {
         // Подготвяме тестови данни
         UUID cardId = UUID.randomUUID();
+        User user = new User();
 
         // Извикваме метода, който трябва да изтрие картата
-        myCardService.deleteMyCardById(cardId);
+        myCardService.deleteMyCardById(cardId, user);
 
         // Проверяваме дали методът deleteById е извикан точно веднъж с правилния идентификатор
         verify(myCardRepository, times(1)).deleteById(cardId);

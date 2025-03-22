@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -38,7 +39,14 @@ public class CardServiceImpl implements CardService {
                 ("Card whit id %s does not exist".formatted(cardId)));
     }
 
+    @Override
+    public int getCardPrice(String name) {
+        Optional<Card> optionalCard = cardRepository.findByName(name);
+        Card card = optionalCard.get();
+        Integer price = card.getPrice();
+       return price /= 2;
 
+    }
 
 
 }

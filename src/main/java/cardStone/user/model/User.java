@@ -38,7 +38,7 @@ public class User {
     private String imageUrl;
 
     @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
-    private List<MyCard> cardToBuys;
+    private List<MyCard> myCards;
 
     @Column
     @Enumerated(EnumType.STRING)

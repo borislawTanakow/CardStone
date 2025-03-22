@@ -103,7 +103,7 @@
                     <h3 class="my-cards">MyCards!</h3>
                     <div class="card-list">
                         <table class="my-table my-wishlist">
-                            <tr th:each="card : ${user.cardToBuys}"
+                            <tr th:each="card : ${user.myCards}"
                                     class="my-stamps">
                                 <td>
                                     <img th:src="${card.imageUrl}" alt="US Mail" width="55px" height="55" style="padding-top: 0.3em; padding-left: 0.3em">

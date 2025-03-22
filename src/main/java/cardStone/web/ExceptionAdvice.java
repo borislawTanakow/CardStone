@@ -1,5 +1,6 @@
 package cardStone.web;
 
+import cardStone.exception.BuyCardException;
 import cardStone.exception.EmailAlreadyExistException;
 import cardStone.exception.UsernameAlreadyExistException;
 import org.springframework.http.HttpStatus;
@@ -39,6 +40,15 @@ public class ExceptionAdvice {
 
         redirectAttributes.addFlashAttribute("emailAlreadyExistMessage", message);
         return "redirect:/register";
+    }
+
+    @ExceptionHandler(BuyCardException.class)
+    public String handleNoCoinsToBuy(RedirectAttributes redirectAttributes, BuyCardException exception) {
+
+        String message = exception.getMessage();
+
+        redirectAttributes.addFlashAttribute("buyCardNoMoneyMessage", message);
+        return "redirect:/shop";
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)

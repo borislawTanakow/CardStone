@@ -197,7 +197,7 @@ public class UserServiceUTest {
     @Test
     void getAllMyCards_UserWithoutCards_ReturnsEmptyList() {
         User user = mock(User.class);
-        when(user.getCardToBuys()).thenReturn(Collections.emptyList());
+        when(user.getMyCards()).thenReturn(Collections.emptyList());
 
         List<MyCard> result = userService.getAllMyCards(user);
 
@@ -207,7 +207,7 @@ public class UserServiceUTest {
     void getAllMyCards_UserWithCards_ReturnsCorrectCards() {
         User user = mock(User.class);
         List<MyCard> expectedCards = List.of(new MyCard(), new MyCard());
-        when(user.getCardToBuys()).thenReturn(expectedCards);
+        when(user.getMyCards()).thenReturn(expectedCards);
 
         List<MyCard> result = userService.getAllMyCards(user);
 

@@ -6,7 +6,10 @@ import cardStone.cards.repository.MyCardRepository;
 import cardStone.cards.service.CardService;
 import cardStone.cards.service.MyCardService;
 import cardStone.deck.model.Deck;
+import cardStone.exception.BuyCardException;
+import cardStone.exception.UsernameAlreadyExistException;
 import cardStone.user.model.User;
+import cardStone.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -17,16 +20,26 @@ public class MyCardServiceImpl implements MyCardService {
 
     private final CardService cardService;
     private final MyCardRepository myCardRepository;
+    private final UserRepository userRepository;
 
-    public MyCardServiceImpl(CardService cardService, MyCardRepository myCardRepository) {
+    public MyCardServiceImpl(CardService cardService, MyCardRepository myCardRepository, UserRepository userRepository) {
         this.cardService = cardService;
         this.myCardRepository = myCardRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
-    public void createCardToBuy(UUID cardId, User user) {
+    public void buyCard(UUID cardId, User user) throws BuyCardException {
 
         Card card = this.cardService.getById(cardId);
+        Integer price = card.getPrice();
+        Integer stoneCoin = user.getStoneCoin();
+
+        if (stoneCoin < price) {
+//            throw new BuyCardException("You don't have enough money for this card %s.".formatted(card.getName()));
+            return;
+        }
+        user.setStoneCoin(stoneCoin - price);
 
         MyCard cardToBuy = MyCard.builder()
                 .name(card.getName())
@@ -38,12 +51,21 @@ public class MyCardServiceImpl implements MyCardService {
                 .build();
 
         myCardRepository.save(cardToBuy);
+        userRepository.save(user);
 
     }
 
+
     @Override
-    public void deleteMyCardById(UUID id) {
+    public void deleteMyCardById(UUID id, User user) {
+        MyCard myCard = myCardRepository.findById(id).get();
+        int price = cardService.getCardPrice(myCard.getName());
+        Integer stoneCoin = user.getStoneCoin();
+        stoneCoin += price;
+        user.setStoneCoin(stoneCoin);
+
         myCardRepository.deleteById(id);
+        userRepository.save(user);
 
     }
 

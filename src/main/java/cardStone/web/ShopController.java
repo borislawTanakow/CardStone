@@ -4,6 +4,7 @@ import cardStone.cards.model.Card;
 import cardStone.cards.model.Type;
 import cardStone.cards.service.CardService;
 import cardStone.cards.service.MyCardService;
+import cardStone.exception.BuyCardException;
 import cardStone.security.AuthenticationMetadata;
 import cardStone.user.model.User;
 import cardStone.user.service.UserService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.UUID;
@@ -31,7 +33,7 @@ public class ShopController {
     }
 
     @GetMapping("/shop")
-    public ModelAndView getShop(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
+    public ModelAndView getShop(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata, RedirectAttributes redirectAttributes) {
 
         User user = userService.getById(authenticationMetadata.getUserId());
         List<Card> allOtherCards = this.cardService.getAllCard();
@@ -41,6 +43,7 @@ public class ShopController {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("shop");
+        modelAndView.addObject(redirectAttributes);
         modelAndView.addObject("goldCards", goldCards);
         modelAndView.addObject("rearCards", rearCards);
         modelAndView.addObject("commonCards", commonCards);
@@ -50,13 +53,13 @@ public class ShopController {
     }
 
     @PostMapping("/cards/buy-card/{id}")
-    public String makeCardToBuyList(@PathVariable UUID id,
-                                    @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
+    public String buyCardToBuyList(@PathVariable UUID id,
+                                    @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) throws BuyCardException {
 
         User user = userService.getById(authenticationMetadata.getUserId());
 
-        myCardService.createCardToBuy(id, user);
+        myCardService.buyCard(id, user);
 
-        return "redirect:/home";
+        return "redirect:/shop";
     }
 }

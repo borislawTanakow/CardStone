@@ -14,5 +14,5 @@ public interface CardService {
     Card getById(UUID cardId);
 
 
-
+    int getCardPrice(String name);
 }

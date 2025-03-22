@@ -40,9 +40,11 @@ public class CardController {
     }
 
     @DeleteMapping("/{id}")
-    public String deleteCardToBuy(@PathVariable UUID id) {
+    public String deleteCardToBuy(@PathVariable UUID id,  @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
 
-        myCardService.deleteMyCardById(id);
+        User user = userService.getById(authenticationMetadata.getUserId());
+
+        myCardService.deleteMyCardById(id ,user);
 
         return "redirect:/home";
     }

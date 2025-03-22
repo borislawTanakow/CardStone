@@ -93,7 +93,7 @@ public class UserService implements UserDetailsService {
     }
 
     public List<MyCard> getAllMyCards(User user) {
-        return user.getCardToBuys();
+        return user.getMyCards();
     }
 
     public void editProfile(EditProfileRequest editProfileRequest, User user) {
