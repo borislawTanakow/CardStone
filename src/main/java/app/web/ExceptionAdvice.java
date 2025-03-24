@@ -44,7 +44,7 @@ public class ExceptionAdvice {
 
     @ExceptionHandler(BuyCardException.class)
     public String handleNoCoinsToBuy(RedirectAttributes redirectAttributes, BuyCardException exception) {
-
+   
         String message = exception.getMessage();
 
         redirectAttributes.addFlashAttribute("buyCardNoMoneyMessage", message);

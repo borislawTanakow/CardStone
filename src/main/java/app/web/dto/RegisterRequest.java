@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
+
 public class RegisterRequest {
 
     @NotNull(message = "Not null username!")
@@ -23,5 +24,6 @@ public class RegisterRequest {
     @NotNull(message = "Not null password!")
     @Size(min = 3, max = 20, message = "Password length must be between 3 and 20 characters!")
     private String confirmPassword;
+
 
 }
