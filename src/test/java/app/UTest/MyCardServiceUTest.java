@@ -9,9 +9,11 @@ import app.cards.service.impl.MyCardServiceImpl;
 import app.deck.model.Deck;
 import app.exception.BuyCardException;
 import app.user.model.User;
+import app.user.repository.UserRepository;
 import app.user.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -34,56 +36,120 @@ public class MyCardServiceUTest {
 
     @Mock
     private UserService userService;
+    @Mock
+    private UserRepository userRepository;
 
     @InjectMocks
     private MyCardServiceImpl myCardService;
 
     @Test
-    public void testCreateCardToBuy() throws BuyCardException {
-        // Подготвяме тестови данни
-        UUID cardId = UUID.randomUUID();
+    void buyCard_SuccessfulPurchase_UpdatesUserAndSavesCard() throws BuyCardException {
+        // Подготовка
         User user = new User();
-        user.setId(UUID.randomUUID()); // Примерно попълване на потребителя
-        Card card = Card.builder()
-                .name("Card Name")
-                .description("Card Description")
-                .imageUrl("image/url")
-                .power(10)
-                .type(Type.GOLD)
-                .build();
+        user.setStoneCoin(150);
 
-        // Когато се извика getById, да върне подготвената карта
-        when(cardService.getById(cardId)).thenReturn(card);
+        Card card = new Card();
+        card.setPrice(100);
+        card.setName("Dragon");
 
-        // Създаваме MyCard обект, който се очаква да бъде създаден и запазен
-        MyCard expectedCardToBuy = MyCard.builder()
-                .name(card.getName())
-                .description(card.getDescription())
-                .owner(user)
-                .imageUrl(card.getImageUrl())
-                .power(card.getPower())
-                .type(card.getType())
-                .build();
+        when(cardService.getById(any(UUID.class))).thenReturn(card);
 
-        // Извикваме метода за създаване на карта за покупка
-        myCardService.buyCard(cardId, user);
+        // Изпълнение
+        myCardService.buyCard(UUID.randomUUID(), user);
 
-        // Проверяваме дали save е бил извикан с правилния обект
-        verify(myCardRepository, times(1)).save(expectedCardToBuy);
+        // Проверки
+        assertEquals(50, user.getStoneCoin());
+        verify(userRepository).save(user);
+        verify(myCardRepository).save(argThat(myCard ->
+                myCard.getName().equals("Dragon") &&
+                        myCard.getOwner().equals(user)
+        ));
     }
 
     @Test
-    public void testDeleteCardToBuyById() {
-        // Подготвяме тестови данни
+    void buyCard_InsufficientFunds_DoesNothing() throws BuyCardException {
+        // Подготовка
+        User user = new User();
+        user.setStoneCoin(50);
+
+        Card card = new Card();
+        card.setPrice(100);
+
+        when(cardService.getById(any(UUID.class))).thenReturn(card);
+
+        // Изпълнение
+        myCardService.buyCard(UUID.randomUUID(), user);
+
+        // Проверки
+        assertEquals(50, user.getStoneCoin());
+        verifyNoInteractions(myCardRepository);
+        verifyNoInteractions(userRepository);
+    }
+
+    @Test
+    void buyCard_ExactAmount_SavesCorrectly() throws BuyCardException {
+        // Подготовка
+        User user = new User();
+        user.setStoneCoin(100);
+
+        Card card = new Card();
+        card.setPrice(100);
+
+        when(cardService.getById(any(UUID.class))).thenReturn(card);
+
+        // Изпълнение
+        myCardService.buyCard(UUID.randomUUID(), user);
+
+        // Проверки
+        assertEquals(0, user.getStoneCoin());
+        verify(userRepository).save(user);
+        verify(myCardRepository).save(any());
+    }
+
+    @Test
+    void deleteMyCardById_SuccessfulDeletion_UpdatesUserAndDeletesCard() {
+        // Подготовка
         UUID cardId = UUID.randomUUID();
         User user = new User();
+        user.setStoneCoin(100);
 
-        // Извикваме метода, който трябва да изтрие картата
+        MyCard myCard = new MyCard();
+        myCard.setName("Dragon");
+
+        when(myCardRepository.findById(cardId)).thenReturn(Optional.of(myCard));
+        when(cardService.getCardPrice("Dragon")).thenReturn(50);
+
+        // Изпълнение
         myCardService.deleteMyCardById(cardId, user);
 
-        // Проверяваме дали методът deleteById е извикан точно веднъж с правилния идентификатор
-        verify(myCardRepository, times(1)).deleteById(cardId);
+        // Проверки
+        assertEquals(150, user.getStoneCoin());
+        verify(myCardRepository).deleteById(cardId);
+        verify(userRepository).save(user);
     }
+
+    @Test
+    void deleteMyCardById_ZeroPrice_UpdatesUserCorrectly() {
+        // Подготовка
+        UUID cardId = UUID.randomUUID();
+        User user = new User();
+        user.setStoneCoin(200);
+
+        MyCard myCard = new MyCard();
+        myCard.setName("FreeCard");
+
+        when(myCardRepository.findById(cardId)).thenReturn(Optional.of(myCard));
+        when(cardService.getCardPrice("FreeCard")).thenReturn(0);
+
+        // Изпълнение
+        myCardService.deleteMyCardById(cardId, user);
+
+        // Проверки
+        assertEquals(200, user.getStoneCoin());
+        verify(userRepository).save(user);
+    }
+
+
 
     @Test
     public void testDeleteCardOnMyDeck() {
