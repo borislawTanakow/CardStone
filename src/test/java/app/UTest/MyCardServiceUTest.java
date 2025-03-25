@@ -2,7 +2,6 @@ package app.UTest;
 
 import app.cards.model.Card;
 import app.cards.model.MyCard;
-import app.cards.model.Type;
 import app.cards.repository.MyCardRepository;
 import app.cards.service.CardService;
 import app.cards.service.impl.MyCardServiceImpl;
@@ -13,7 +12,6 @@ import app.user.repository.UserRepository;
 import app.user.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -120,7 +118,7 @@ public class MyCardServiceUTest {
         when(cardService.getCardPrice("Dragon")).thenReturn(50);
 
         // Изпълнение
-        myCardService.deleteMyCardById(cardId, user);
+        myCardService.deleteMyCardByIdAndGiveHalfSC(cardId, user);
 
         // Проверки
         assertEquals(150, user.getStoneCoin());
@@ -142,7 +140,7 @@ public class MyCardServiceUTest {
         when(cardService.getCardPrice("FreeCard")).thenReturn(0);
 
         // Изпълнение
-        myCardService.deleteMyCardById(cardId, user);
+        myCardService.deleteMyCardByIdAndGiveHalfSC(cardId, user);
 
         // Проверки
         assertEquals(200, user.getStoneCoin());

@@ -56,15 +56,24 @@ public class MyCardServiceImpl implements MyCardService {
 
 
     @Override
-    public void deleteMyCardById(UUID id, User user) {
+    public void deleteMyCardByIdAndGiveHalfSC(UUID id, User user) {
         MyCard myCard = myCardRepository.findById(id).get();
+        if (myCard.getDeck() != null) {
+            return;
+        }
         int price = cardService.getCardPrice(myCard.getName());
         Integer stoneCoin = user.getStoneCoin();
         stoneCoin += price;
         user.setStoneCoin(stoneCoin);
 
-        myCardRepository.deleteById(id);
         userRepository.save(user);
+
+        deleteCardOnMyCards(id);
+
+    }
+
+    private void deleteCardOnMyCards(UUID id) {
+        myCardRepository.deleteById(id);
 
     }
 

@@ -44,7 +44,7 @@ public class CardController {
 
         User user = userService.getById(authenticationMetadata.getUserId());
 
-        myCardService.deleteMyCardById(id ,user);
+        myCardService.deleteMyCardByIdAndGiveHalfSC(id ,user);
 
         return "redirect:/home";
     }

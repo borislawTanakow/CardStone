@@ -78,6 +78,48 @@ public class CardServiceUTest {
         // Проверяваме съобщението на изключението
         assertEquals("Card whit id " + cardId + " does not exist", exception.getMessage());
     }
+    @Test
+    void getCardPrice_ExistingCard_ReturnsHalfPrice() {
+
+        Card mockCard = new Card();
+        mockCard.setPrice(100);
+        when(cardRepository.findByName("Dragon")).thenReturn(Optional.of(mockCard));
+
+        // Изпълнение & Проверка
+        assertEquals(50, cardService.getCardPrice("Dragon"));
+    }
+
+    @Test
+    void getCardPrice_OddPrice_ReturnsFloorValue() {
+
+
+        Card mockCard = new Card();
+        mockCard.setPrice(99);
+        when(cardRepository.findByName("Griffin")).thenReturn(Optional.of(mockCard));
+
+        assertEquals(49, cardService.getCardPrice("Griffin"));
+    }
+
+    @Test
+    void getCardPrice_ZeroPrice_ReturnsZero() {
+
+
+        Card mockCard = new Card();
+        mockCard.setPrice(0);
+        when(cardRepository.findByName("FreeCard")).thenReturn(Optional.of(mockCard));
+
+        assertEquals(0, cardService.getCardPrice("FreeCard"));
+    }
+
+    @Test
+    void getCardPrice_NonExistingCard_ThrowsException() {
+
+        when(cardRepository.findByName("Ghost")).thenReturn(Optional.empty());
+
+        assertThrows(NoSuchElementException.class, () ->
+                cardService.getCardPrice("Ghost")
+        );
+    }
 }
 
 
