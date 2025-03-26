@@ -1,6 +1,8 @@
 package app.web;
 
 import app.battle.service.BattleService;
+import app.matchHistory.client.MatchHistoryClient;
+import app.matchHistory.model.MatchHistory;
 import app.security.AuthenticationMetadata;
 import app.user.model.User;
 import app.user.service.UserService;
@@ -80,4 +82,6 @@ public class BattleController {
 
         return "draw-page";
     }
+
+
 }

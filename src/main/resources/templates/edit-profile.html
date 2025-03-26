@@ -12,35 +12,66 @@
     >
         <h1 class="text-center mt-2"><span class="badge badge-pill badge-dark">Edit profile</span></h1>
 
+        <!-- First Name -->
         <div class="form-group">
             <div class="label-holder text-white textCol d-flex justify-content-center">
-                <label for="first-name" class="h4 mb-2">First Name</label>
+                <label  for="first-name" class="h4 mb-2">First Name</label>
             </div>
-            <input type="text" class="form-control" id="first-name" name="first-name" value="" th:field="*{firstName}"/>
-            <small th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="bg-danger text-light rounded">Name error message</small>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="first-name"
+                    th:field="*{firstName}"
+                    th:attr="placeholder=${#strings.isEmpty(editProfileRequest.firstName)} ? 'Enter first name'"
+            />
+            <small
+                    th:if="${#fields.hasErrors('firstName')}"
+                    th:errors="*{firstName}"
+                    class="bg-danger text-light rounded"
+            ></small>
         </div>
 
+        <!-- Last Name -->
         <div class="form-group">
             <div class="label-holder text-white textCol d-flex justify-content-center">
                 <label for="last-name" class="h4 mb-2">Last Name</label>
             </div>
-            <input type="text"  class="form-control" id="last-name" name="last-name" value="" th:field="*{lastName}"/>
-            <small th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="bg-danger text-light rounded">Description error message</small>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="last-name"
+                    th:field="*{lastName}"
+                    th:attr="placeholder=${#strings.isEmpty(editProfileRequest.lastName)} ? 'Enter last name'"
+            />
+            <small
+                    th:if="${#fields.hasErrors('lastName')}"
+                    th:errors="*{lastName}"
+                    class="bg-danger text-light rounded"
+            ></small>
         </div>
 
+        <!-- Image URL -->
         <div class="form-group">
             <div class="label-holder text-white textCol d-flex justify-content-center">
                 <label for="imageUrl" class="h4 mb-2">Image URL</label>
             </div>
-            <textarea type="text" class="form-control" id="imageUrl" name="imageUrl" th:field="*{imageUrl}"></textarea>
-            <small th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}" class="bg-danger text-light rounded">Image URL error message</small>
+            <textarea
+                    type="text"
+                    class="form-control"
+                    id="imageUrl"
+                    th:field="*{imageUrl}"
+                    th:attr="placeholder=${#strings.isEmpty(editProfileRequest.imageUrl)} ? 'Enter image URL'"
+            ></textarea>
+            <small
+                    th:if="${#fields.hasErrors('imageUrl')}"
+                    th:errors="*{imageUrl}"
+                    class="bg-danger text-light rounded"
+            ></small>
         </div>
-
 
         <div class="button-holder d-flex justify-content-center">
             <button type="submit" class="btn btn-info  mb-3">Edit</button>
         </div>
-
     </form>
 </main>
 <footer class="footer bg-transparent py-2">

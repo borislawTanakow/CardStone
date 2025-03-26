@@ -1,6 +1,8 @@
 package app.battle.service;
 
 import app.cards.model.MyCard;
+import app.matchHistory.client.MatchHistoryClient;
+import app.matchHistory.model.MatchHistory;
 import app.user.model.User;
 import app.user.repository.UserRepository;
 import app.user.service.UserService;
@@ -15,11 +17,13 @@ public class BattleService {
 
     private final UserService userService;
     private final UserRepository userRepository;
+    private final MatchHistoryClient matchHistoryClient;
 
     @Autowired
-    public BattleService(UserService userService, UserRepository userRepository) {
+    public BattleService(UserService userService, UserRepository userRepository, MatchHistoryClient matchHistoryClient) {
         this.userService = userService;
         this.userRepository = userRepository;
+        this.matchHistoryClient = matchHistoryClient;
     }
 
     public User battle(User user, UUID opponentId) {
@@ -44,10 +48,12 @@ public class BattleService {
      if(power > opponentPower) {
          user.setStoneCoin(user.getStoneCoin() + 50);
          userRepository.save(user);
+         saveMatchResult(user.getId(), "WIN" , opponent.getUsername(), power, opponentPower, 50);
           return user;
      } else if(power < opponentPower) {
          opponent.setStoneCoin(opponent.getStoneCoin() + 50);
          userRepository.save(opponent);
+         saveMatchResult(user.getId(), "LOSE" , opponent.getUsername(), power, opponentPower, 0);
          return opponent;
      }
 
@@ -59,5 +65,17 @@ public class BattleService {
 //        matchHistoryService.save(battleResult);
 
         return null;
+    }
+
+    public void saveMatchResult(UUID userId, String result, String opponentName, double myPower, double opponentPower, int sc) {
+        MatchHistory matchHistory = MatchHistory.builder()
+                .userId(userId)
+                .status(result)
+                .opponent(opponentName)
+                .myPower(myPower)
+                .opponentPower(opponentPower)
+                .stoneCoins(sc)
+                .build();
+        matchHistoryClient.saveMatchHistory(matchHistory);
     }
 }
