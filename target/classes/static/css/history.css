@@ -33,3 +33,35 @@ th {
     color: red;
     font-weight: bold;
 }
+.draw {
+    color: yellow;
+    font-weight: bold;
+}
+
+.profile-actions-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #007bff;  /* основен син цвят */
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    position: fixed;      /* фиксирана позиция */
+    bottom: 3em;         /* разстояние от долния край */
+    left: 50%;            /* центриране по хоризонтала */
+    transform: translateX(-50%);  /* точно центриране */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-actions-button:hover {
+    background-color: #0056b3;  /* по-тъмен син при hover */
+}
+
+.profile-actions-button p {
+    margin: 0;
+    padding-right: 8px;
+    font-size: 16px;
+}
+

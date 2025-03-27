@@ -17,7 +17,7 @@ import java.util.UUID;
 public interface MatchHistoryClient {
 
     // GET последните 6 мача за потребител
-    @GetMapping("/{userId}/recent")
+    @GetMapping("/{userId}")
     List<MatchHistory> getRecentMatches(
             @PathVariable("userId") UUID userId
     );
@@ -28,9 +28,4 @@ public interface MatchHistoryClient {
             @RequestBody MatchHistory matchHistory
     );
 
-    // GET цялата история (ако е нужно)
-    @GetMapping("/{userId}")
-    List<MatchHistory> getFullHistory(
-            @PathVariable("userId") UUID userId
-    );
 }

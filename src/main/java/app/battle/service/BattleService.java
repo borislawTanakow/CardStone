@@ -49,13 +49,18 @@ public class BattleService {
          user.setStoneCoin(user.getStoneCoin() + 50);
          userRepository.save(user);
          saveMatchResult(user.getId(), "WIN" , opponent.getUsername(), power, opponentPower, 50);
+         saveMatchResult(opponent.getId(), "LOSE" , user.getUsername(), opponentPower, power, 0);
           return user;
      } else if(power < opponentPower) {
          opponent.setStoneCoin(opponent.getStoneCoin() + 50);
          userRepository.save(opponent);
          saveMatchResult(user.getId(), "LOSE" , opponent.getUsername(), power, opponentPower, 0);
+         saveMatchResult(opponent.getId(), "WIN" , user.getUsername(), opponentPower, power, 50);
          return opponent;
      }
+
+        saveMatchResult(user.getId(), "DRAW" , opponent.getUsername(), power, opponentPower, 20);
+        saveMatchResult(opponent.getId(), "DRAW" , user.getUsername(), opponentPower, power, 20);
 
         //TOOD logika kakvo pravim s pobeditelq ot macha example: vseki user da si ima kolekciq ot to4ki
         //i pri bitka da se iz4izslqva kolko to4ki vzima pobeditelq na baza primerno 10% ot to4kite na zagubiliq
