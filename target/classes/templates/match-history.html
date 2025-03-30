@@ -27,6 +27,7 @@
   <tr th:each="match : ${history}">
     <td th:text="${match.status}" th:if="${match.status.equals('LOSE')}" class="lose">Lose</td>
     <td th:text="${match.status}" th:if="${match.status.equals('WIN')}" class="win">Win</td>
+    <td th:text="${match.status}" th:if="${match.status.equals('DRAW')}" class="draw">Draw</td>
     <td th:text="${match.opponent}">Opponent 3</td>
     <td th:text="${match.myPower}">1350</td>
     <td th:text="${match.opponentPower}">1450</td>

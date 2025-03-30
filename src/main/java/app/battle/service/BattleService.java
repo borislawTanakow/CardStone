@@ -59,6 +59,11 @@ public class BattleService {
          return opponent;
      }
 
+        user.setStoneCoin(user.getStoneCoin() + 20);
+        opponent.setStoneCoin(opponent.getStoneCoin() + 20);
+        userRepository.save(user);
+        userRepository.save(opponent);
+
         saveMatchResult(user.getId(), "DRAW" , opponent.getUsername(), power, opponentPower, 20);
         saveMatchResult(opponent.getId(), "DRAW" , user.getUsername(), opponentPower, power, 20);
 
