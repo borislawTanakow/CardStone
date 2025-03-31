@@ -1,8 +1,6 @@
-package app.web;
+package app.webApiTest;
 
 import app.battle.service.BattleService;
-import app.matchHistory.client.MatchHistoryClient;
-import app.matchHistory.model.MatchHistory;
 import app.security.AuthenticationMetadata;
 import app.user.model.User;
 import app.user.service.UserService;

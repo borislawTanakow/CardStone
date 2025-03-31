@@ -1,9 +1,9 @@
-package app.web;
+package app.webApiTest;
 
 import app.security.AuthenticationMetadata;
 import app.user.model.User;
 import app.user.service.UserService;
-import app.web.dto.EditProfileRequest;
+import app.webApiTest.dto.EditProfileRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;

@@ -1,4 +1,4 @@
-package app.web;
+package app.webApiTest;
 
 import app.matchHistory.client.MatchHistoryClient;
 import app.matchHistory.model.MatchHistory;

@@ -36,11 +36,14 @@
 
         <!-- Дуел Секция -->
         <div class="duel-section">
-            <h1 style=  "padding-left: 14px">VS</h1>
+            <h1 class="vs">VS</h1>
             <div class="buttons-info">
                 <div class="cards">
-                    <form th:action="@{'/battle/' + ${opponent.getId()}}" th:method="POST">
+                    <form th:if="${user.isActive()}" th:action="@{'/battle/' + ${opponent.getId()}}" th:method="POST">
                         <button class="btn-outline-info btn">BATTLE</button>
+                    </form>
+                    <form th:unless="${user.isActive()}">
+                        <a href="/home" class="inactive-button">INACTIVE!</a>
                     </form>
                 </div>
             </div>

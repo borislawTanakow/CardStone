@@ -1,8 +1,8 @@
-package app.web;
+package app.webApiTest;
 
 import app.user.service.UserService;
-import app.web.dto.LoginRequest;
-import app.web.dto.RegisterRequest;
+import app.webApiTest.dto.LoginRequest;
+import app.webApiTest.dto.RegisterRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

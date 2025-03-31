@@ -1,6 +1,5 @@
-package app.UTest;
+package app;
 
-import app.Application;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 

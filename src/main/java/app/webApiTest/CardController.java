@@ -1,4 +1,4 @@
-package app.web;
+package app.webApiTest;
 
 import app.cards.service.CardService;
 import app.cards.service.MyCardService;

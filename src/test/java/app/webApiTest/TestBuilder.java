@@ -1,4 +1,4 @@
-package app.web;
+package app.webApiTest;
 
 import app.deck.model.Deck;
 import app.user.model.RoleEnum;
