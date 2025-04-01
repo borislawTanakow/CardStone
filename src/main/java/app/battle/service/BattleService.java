@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 @Service
@@ -39,20 +40,26 @@ public class BattleService {
 
         for (MyCard card : userCards) {
             power += card.getPower();
+            double bonus = powerBonus(power);
+            power += bonus;
         }
 
         for (MyCard card : opponentCards) {
             opponentPower += card.getPower();
+            double bonus = powerBonus(opponentPower);
+            opponentPower += bonus;
         }
 
      if(power > opponentPower) {
          user.setStoneCoin(user.getStoneCoin() + 50);
+         user.setCurrentRank(user.getCurrentRank() + 10);
          userRepository.save(user);
          saveMatchResult(user.getId(), "WIN" , opponent.getUsername(), power, opponentPower, 50);
          saveMatchResult(opponent.getId(), "LOSE" , user.getUsername(), opponentPower, power, 0);
           return user;
      } else if(power < opponentPower) {
          opponent.setStoneCoin(opponent.getStoneCoin() + 50);
+         opponent.setCurrentRank(user.getCurrentRank() + 10);
          userRepository.save(opponent);
          saveMatchResult(user.getId(), "LOSE" , opponent.getUsername(), power, opponentPower, 0);
          saveMatchResult(opponent.getId(), "WIN" , user.getUsername(), opponentPower, power, 50);
@@ -72,8 +79,6 @@ public class BattleService {
         // a na zagubiliq po maluk procent primerno 5% ot to4kite gi gubi
 
 
-//        matchHistoryService.save(battleResult);
-
         return null;
     }
 
@@ -87,5 +92,24 @@ public class BattleService {
                 .stoneCoins(sc)
                 .build();
         matchHistoryClient.saveMatchHistory(matchHistory);
+    }
+
+    private double powerBonus(double power) {
+        Random random = new Random();
+        int bonus = 0;
+
+        if (power >= 0 && power <= 100) {
+            bonus = random.nextInt(51);  //от 0 до 50
+        } else if (power > 100 && power <= 200) {
+            bonus = 50 + random.nextInt(51);  // от 50 до 100
+        } else if (power > 200 && power <= 400) {
+            bonus = 100 + random.nextInt(101);  // 100 до 200
+        } else if (power > 400 && power <= 600) {
+            bonus = 200 + random.nextInt(101);  // 200 до 300
+        } else if (power > 600) {
+            bonus = 300 + random.nextInt(301);  // 300 до 600
+        }
+
+       return bonus;
     }
 }

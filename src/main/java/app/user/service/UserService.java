@@ -19,9 +19,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -87,7 +89,10 @@ public class UserService implements UserDetailsService {
     }
 
     public List<User> getAllUsers() {
-            return userRepository.findAll();
+        List<User> all = userRepository.findAll();
+        return all.stream()
+                .sorted(Comparator.comparingInt(User::getCurrentRank).reversed())
+                .toList();
     }
 
     public List<MyCard> getAllMyCards(User user) {

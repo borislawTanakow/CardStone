@@ -31,8 +31,9 @@
                 <h2 class="card-title">Username: <span th:text="${user.getUsername()}" class="user-text">john_doe</span></h2>
                 <p class="card-description">First Name: <span th:text="${user.getFirstName()}" class="user-text">John</span></p>
                 <p class="card-description">Last Name: <span th:text="${user.getLastName()}" class="user-text">Doe</span></p>
-                <p class="card-description">Role: <span th:text="${user.getRole()}" class="user-text">Admin</span></p>
-                <p class="card-description">StoneCoins: <span th:text="${user.getStoneCoin()}" class="user-text">Admin</span></p>
+                <p class="card-description">Role: <span th:text="${user.getRole()}" class="user-text"></span></p>
+                <p class="card-description">StoneCoins: <span th:text="${user.getStoneCoin()}" class="user-text"></span></p>
+                <p class="card-description">Rank: <span th:text="${user.getCurrentRank()}" class="user-text"></span></p>
                 <p class="card-description">
                     Status:
                     <span class="status-indicator"></span>

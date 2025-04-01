@@ -91,6 +91,9 @@ public class MyCardServiceImpl implements MyCardService {
         Optional<MyCard> optionalCard = myCardRepository.findById(cardId);
         MyCard card = optionalCard.get();
         Deck userDeck = user.getDeck();
+        if (userDeck.getCards().size() >= 3) {
+            return;
+        }
         card.setDeck(userDeck);
 
 
