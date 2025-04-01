@@ -49,6 +49,8 @@ public class User {
 
     private Integer stoneCoin;
 
+    private Integer currentRank;
+
     @OneToOne(cascade = CascadeType.ALL)
     private Deck deck;
 }

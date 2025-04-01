@@ -1,4 +1,4 @@
-package app.webApiTest;
+package app.web;
 
 import app.cards.model.Card;
 import app.cards.model.Type;

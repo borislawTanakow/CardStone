@@ -25,22 +25,20 @@
                 <h2 class="card-title">Username: <span th:text="${user.getUsername()}" class="user-text">john_doe</span></h2>
                 <p class="card-description">First Name: <span th:text="${user.getFirstName()}" class="user-text">John</span></p>
                 <p class="card-description">Last Name: <span th:text="${user.getLastName()}" class="user-text">Doe</span></p>
-                <p class="card-description">Points: <span class="user-text">99</span></p>
-<!--                <p class="card-description">-->
-<!--                    Status:-->
-<!--                    <span class="status-indicator"></span>-->
-<!--                    <span class="active-status">Active</span>-->
-<!--                </p>-->
+                <p class="card-description">Rank: <span th:text="${user.getCurrentRank()}" class="user-text">99</span></p>
             </div>
         </div>
 
         <!-- Дуел Секция -->
         <div class="duel-section">
-            <h1 style=  "padding-left: 14px">VS</h1>
+            <h1 class="vs">VS</h1>
             <div class="buttons-info">
                 <div class="cards">
-                    <form th:action="@{'/battle/' + ${opponent.getId()}}" th:method="POST">
+                    <form th:if="${user.isActive()}" th:action="@{'/battle/' + ${opponent.getId()}}" th:method="POST">
                         <button class="btn-outline-info btn">BATTLE</button>
+                    </form>
+                    <form th:unless="${user.isActive()}">
+                        <a href="/home" class="inactive-button">INACTIVE!</a>
                     </form>
                 </div>
             </div>
@@ -54,12 +52,7 @@
                 <h2 class="card-title">Opponent: <span th:text="${opponent.getUsername()}" class="user-text">jane_doe</span></h2>
                 <p class="card-description">First Name: <span th:text="${opponent.getFirstName()}" class="user-text">Jane</span></p>
                 <p class="card-description">Last Name: <span th:text="${opponent.getLastName()}" class="user-text">Doe</span></p>
-                <p class="card-description">Points: <span class="user-text">99</span></p>
-<!--                <p class="card-description">-->
-<!--                    Status:-->
-<!--                    <span class="status-indicator"></span>-->
-<!--                    <span class="inactive-status">Inactive</span>-->
-<!--                </p>-->
+                <p class="card-description">Rank: <span th:text="${opponent.getCurrentRank()}" class="user-text">99</span></p>
             </div>
         </div>
     </section>

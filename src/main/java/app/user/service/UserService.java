@@ -9,8 +9,8 @@ import app.security.AuthenticationMetadata;
 import app.user.model.RoleEnum;
 import app.user.model.User;
 import app.user.repository.UserRepository;
-import app.webApiTest.dto.EditProfileRequest;
-import app.webApiTest.dto.RegisterRequest;
+import app.web.dto.EditProfileRequest;
+import app.web.dto.RegisterRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -63,8 +63,8 @@ public class UserService implements UserDetailsService {
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .isActive(true)
                 .role(RoleEnum.USER)
-//                .rank(RankEnum.SILVER)
                 .stoneCoin(50)
+                .currentRank(0)
                 .build();
 
         Deck deck = Deck.builder().build();

@@ -1,4 +1,4 @@
-package app.webApiTest;
+package app.web;
 
 import app.security.AuthenticationMetadata;
 import app.user.model.RoleEnum;
@@ -12,7 +12,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 
 import java.util.UUID;
 
-import static app.webApiTest.TestBuilder.aRandomUser;
+import static app.web.TestBuilder.aRandomUser;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;

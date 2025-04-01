@@ -1,4 +1,4 @@
-package app.webApiTest;
+package app.web;
 
 import app.exception.BuyCardException;
 import app.exception.EmailAlreadyExistException;

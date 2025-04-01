@@ -1,4 +1,4 @@
-package app.webApiTest;
+package app.web;
 
 import app.battle.service.BattleService;
 import app.security.AuthenticationMetadata;

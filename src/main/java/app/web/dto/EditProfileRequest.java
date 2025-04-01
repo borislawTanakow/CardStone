@@ -1,4 +1,4 @@
-package app.webApiTest.dto;
+package app.web.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

@@ -3,21 +3,82 @@ package app.init;
 import app.cards.model.Card;
 import app.cards.model.Type;
 import app.cards.repository.CardRepository;
+import app.deck.model.Deck;
+import app.user.model.RoleEnum;
+import app.user.model.User;
+import app.user.repository.UserRepository;
+import app.web.dto.RegisterRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class InitLanguages implements CommandLineRunner {
+public class InitCardAndUser implements CommandLineRunner {
 
     private final CardRepository cardRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
+    @Autowired
+    public InitCardAndUser(CardRepository cardRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.cardRepository = cardRepository;
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
+    private List<User> createUsers() {
+        List<User> users = new ArrayList<>();
 
+        User user1 = User.builder()
+                .username("damgass")
+                .email("moko@gmail.com")
+                .password(passwordEncoder.encode("1234"))
+                .isActive(true)
+                .deck(new Deck())
+                .firstName("Boko")
+                .lastName("Tabakov")
+                .imageUrl("https://gratisography.com/wp-content/uploads/2024/11/gratisography-augmented-reality-800x525.jpg")
+                .role(RoleEnum.ADMIN)
+                .stoneCoin(100)
+                .currentRank(0)
+                .build();
 
+        User user2 = User.builder()
+                .username("alek")
+                .email("moko123@gmail.com")
+                .password(passwordEncoder.encode("1234"))
+                .isActive(true)
+                .deck(new Deck())
+                .firstName("Alek")
+                .lastName("Goshov")
+                .imageUrl("https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp")
+                .role(RoleEnum.USER)
+                .stoneCoin(100)
+                .currentRank(0)
+                .build();
 
+        User user3 = User.builder()
+                .username("Bea")
+                .email("bea@gmail.com")
+                .password(passwordEncoder.encode("1234"))
+                .isActive(true)
+                .deck(new Deck())
+                .firstName("Bea")
+                .lastName("Tabakova")
+                .imageUrl("https://babyboxfamily.com/cdn/shop/articles/ausstattung-schlafen-co-746426.jpg?crop=center&height=700&v=1692918758&width=800")
+                .role(RoleEnum.USER)
+                .stoneCoin(100)
+                .currentRank(0)
+                .build();
+        users.add(user1);
+        users.add(user2);
+        users.add(user3);
+        return users;
+    }
 
 
   List<Card> cards = List.of(
@@ -40,21 +101,20 @@ public class InitLanguages implements CommandLineRunner {
 
 
 
-    @Autowired
-    public InitLanguages(CardRepository cardRepository) {
-        this.cardRepository = cardRepository;
-    }
+
 
 
     @Override
     public void run(String... args) throws Exception {
 
         long count = cardRepository.count();
+        List<User> users = createUsers();
 
         if (count > 0) {
             return;
         }
 
+        userRepository.saveAll(users);
         cardRepository.saveAll(cards);
 
 

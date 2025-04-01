@@ -1,4 +1,4 @@
-package app.webApiTest;
+package app.web;
 
 import app.cards.model.MyCard;
 import app.security.AuthenticationMetadata;

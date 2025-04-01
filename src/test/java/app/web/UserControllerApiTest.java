@@ -1,9 +1,9 @@
-package app.webApiTest;
+package app.web;
 
 import app.security.AuthenticationMetadata;
 import app.user.model.User;
 import app.user.service.UserService;
-import app.webApiTest.dto.EditProfileRequest;
+import app.web.dto.EditProfileRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
