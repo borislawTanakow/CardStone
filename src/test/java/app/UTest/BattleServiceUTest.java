@@ -3,6 +3,7 @@ package app.UTest;
 import app.battle.service.BattleService;
 import app.cards.model.MyCard;
 import app.deck.model.Deck;
+import app.matchHistory.client.MatchHistoryClient;
 import app.user.model.User;
 import app.user.repository.UserRepository;
 import app.user.service.UserService;
@@ -15,9 +16,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class BattleServiceUTest {
@@ -28,120 +29,121 @@ public class BattleServiceUTest {
     @Mock
     private UserRepository userRepository;
 
+    @Mock
+    private MatchHistoryClient matchHistoryClient;
+
     @InjectMocks
     private BattleService battleService;
 
 
     @Test
     public void testBattleUserWins() {
-        // Подготвяме данни за потребителите
         UUID opponentId = UUID.randomUUID();
         User user = new User();
+        user.setUsername("user");
+        user.setCurrentRank(0);
         User opponent = new User();
+        opponent.setUsername("opponent");
+        opponent.setCurrentRank(0);
 
-        // Създаваме колоди с карти за двамата
-        MyCard userCard1 = MyCard.builder().power(10).build();
-        MyCard userCard2 = MyCard.builder().power(20).build();
-        MyCard opponentCard1 = MyCard.builder().power(15).build();
-        MyCard opponentCard2 = MyCard.builder().power(10).build();
         Deck deckUser = new Deck();
+        deckUser.setCards(List.of(
+                MyCard.builder().power(100).build(),
+                MyCard.builder().power(100).build()
+        ));
         Deck deckOpponent = new Deck();
-        deckUser.setCards(List.of(userCard1, userCard2));
-        deckOpponent.setCards(List.of(opponentCard1, opponentCard2));
+        deckOpponent.setCards(List.of(
+                MyCard.builder().power(10).build(),
+                MyCard.builder().power(10).build()
+        ));
 
-        // Добавяме картите към дековете
         user.setDeck(deckUser);
         opponent.setDeck(deckOpponent);
 
-        // Определяме камъчета на потребителите
         user.setStoneCoin(100);
         opponent.setStoneCoin(100);
 
-        // Мокваме метода getById да връща опонента
         when(userService.getById(opponentId)).thenReturn(opponent);
 
-        // Извикваме метода за битка
         User winner = battleService.battle(user, opponentId);
 
-        // Проверяваме дали победителят е потребителя
         assertEquals(user, winner);
         assertEquals(150, user.getStoneCoin());
-        assertEquals(100, opponent.getStoneCoin()); // Опонентът не е получил камъчета
+        assertEquals(100, opponent.getStoneCoin());
+
+        verify(userRepository).save(user);
+        verify(matchHistoryClient, times(2)).saveMatchHistory(any());
     }
 
     @Test
     public void testBattleOpponentWins() {
-        // Подготвяме данни за потребителите
         UUID opponentId = UUID.randomUUID();
         User user = new User();
+        user.setUsername("user");
+        user.setCurrentRank(0);
         User opponent = new User();
-
-        // Създаваме колоди с карти за двамата
-        MyCard userCard1 = MyCard.builder().power(10).build();
-        MyCard userCard2 = MyCard.builder().power(10).build();
-        MyCard opponentCard1 = MyCard.builder().power(20).build();
-        MyCard opponentCard2 = MyCard.builder().power(20).build();
+        opponent.setUsername("opponent");
+        opponent.setCurrentRank(0);
 
         Deck deckUser = new Deck();
+        deckUser.setCards(List.of(
+                MyCard.builder().power(10).build(),
+                MyCard.builder().power(10).build()
+        ));
         Deck deckOpponent = new Deck();
-        deckUser.setCards(List.of(userCard1, userCard2));
-        deckOpponent.setCards(List.of(opponentCard1, opponentCard2));
+        deckOpponent.setCards(List.of(
+                MyCard.builder().power(100).build(),
+                MyCard.builder().power(100).build()
+        ));
 
-        // Добавяме картите към дековете
         user.setDeck(deckUser);
         opponent.setDeck(deckOpponent);
 
-        // Определяме камъчета на потребителите
         user.setStoneCoin(100);
         opponent.setStoneCoin(100);
 
-        // Мокваме метода getById да връща опонента
         when(userService.getById(opponentId)).thenReturn(opponent);
 
-        // Извикваме метода за битка
         User winner = battleService.battle(user, opponentId);
 
-        // Проверяваме дали победителят е опонента
         assertEquals(opponent, winner);
         assertEquals(150, opponent.getStoneCoin());
-        assertEquals(100, user.getStoneCoin()); // Потребителят не е получил камъчета
+        assertEquals(100, user.getStoneCoin());
+
+        verify(userRepository).save(opponent);
+        verify(matchHistoryClient, times(2)).saveMatchHistory(any());
     }
+
 
     @Test
     public void testBattleDraw() {
-        // Подготвяме данни за потребителите
         UUID opponentId = UUID.randomUUID();
         User user = new User();
+        user.setUsername("user");
         User opponent = new User();
-
-        // Създаваме колоди с карти за двамата с еднаква сила
-        MyCard userCard1 = MyCard.builder().power(20).build();
-        MyCard userCard2 = MyCard.builder().power(20).build();
-        MyCard opponentCard1 = MyCard.builder().power(20).build();
-        MyCard opponentCard2 = MyCard.builder().power(20).build();
+        opponent.setUsername("opponent");
 
         Deck deckUser = new Deck();
+        deckUser.setCards(List.of());
         Deck deckOpponent = new Deck();
-        deckUser.setCards(List.of(userCard1, userCard2));
-        deckOpponent.setCards(List.of(opponentCard1, opponentCard2));
+        deckOpponent.setCards(List.of());
 
-        // Добавяме картите към дековете
         user.setDeck(deckUser);
         opponent.setDeck(deckOpponent);
 
-        // Определяме камъчета на потребителите
         user.setStoneCoin(100);
         opponent.setStoneCoin(100);
 
-        // Мокваме метода getById да връща опонента
         when(userService.getById(opponentId)).thenReturn(opponent);
 
-        // Извикваме метода за битка
         User winner = battleService.battle(user, opponentId);
 
-        // Проверяваме дали няма победител
         assertNull(winner);
-        assertEquals(100, user.getStoneCoin());
-        assertEquals(100, opponent.getStoneCoin());
+        assertEquals(120, user.getStoneCoin());
+        assertEquals(120, opponent.getStoneCoin());
+
+        verify(userRepository).save(user);
+        verify(userRepository).save(opponent);
+        verify(matchHistoryClient, times(2)).saveMatchHistory(any());
     }
 }

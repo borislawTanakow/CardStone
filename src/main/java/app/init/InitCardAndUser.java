@@ -82,9 +82,9 @@ public class InitCardAndUser implements CommandLineRunner {
 
 
   List<Card> cards = List.of(
-          createCard("DarkMagician", "Dark Magician is one of the most iconic cards in the Yu-Gi-Oh! game.", "https://i.pinimg.com/736x/fd/08/56/fd085657cb5dc97241754f324837a21e.jpg", Type.GOLD, 165, 200)
-          ,createCard("LichKing", "The Lich King is a pivotal figure in the World of Warcraft universe, serving as the leader of the Scourge, an army of undead. He resides in Icecrown Citadel, atop the Frozen Throne, from where he exerts control over his minions through the Helm of Domination. ", "https://i.ytimg.com/vi/BCr7y4SLhck/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAF5MnRDfztzIe6wAe_dT9jI29gPQ", Type.GOLD, 220, 250)
-          ,createCard("BlueEyesDragon", "This legendary dragon is a powerful engine of destruction. Almost invincible, few have faced this fearsome creature and lived to tell the tale.", "https://static1.cbrimages.com/wordpress/wp-content/uploads/2020/10/Blue-Eyes-White-Dragon-Art-2.png", Type.GOLD, 160, 180)
+          createCard("DarkMagician", "BlackMagic", "https://i.pinimg.com/736x/fd/08/56/fd085657cb5dc97241754f324837a21e.jpg", Type.GOLD, 165, 200)
+          ,createCard("LichKing", "Lich king", "https://i.ytimg.com/vi/BCr7y4SLhck/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAF5MnRDfztzIe6wAe_dT9jI29gPQ", Type.GOLD, 220, 250)
+          ,createCard("BlueEyesDragon", "blue eyes dragon", "https://static1.cbrimages.com/wordpress/wp-content/uploads/2020/10/Blue-Eyes-White-Dragon-Art-2.png", Type.GOLD, 160, 180)
           ,createCard("LeeroyJenkins", "leeroy jenkins", "https://warcraft.wiki.gg/images/7/71/Leeroy_Jenkins_TCG.jpg", Type.GOLD, 200,240)
           ,createCard("Exodia", "Exodia", "https://cdn.ygorganization.com/2023/03/BandaiExodiaTitleCard.png", Type.GOLD, 300, 300)
           ,createCard("RenoJackson", "return heath to Max", "https://i.pinimg.com/736x/51/34/a4/5134a4f9f624ed453481a5bbb8443cce.jpg", Type.RARE, 100,100)

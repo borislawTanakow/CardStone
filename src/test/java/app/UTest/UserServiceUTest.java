@@ -74,17 +74,22 @@ public class UserServiceUTest {
     }
 
     @Test
-    void givenExistingUsersInDatabase_whenGetAllUsers_thenReturnThemAll() {
-
-        // Give
-        List<User> userList = List.of(new User(), new User());
+    void givenExistingUsersInDatabase_whenGetAllUsers_thenReturnThemAllSortedByCurrentRankDesc() {
+        // Arrange
+        User user1 = new User();
+        user1.setCurrentRank(1);
+        User user2 = new User();
+        user2.setCurrentRank(2);
+        List<User> userList = List.of(user1, user2);
         when(userRepository.findAll()).thenReturn(userList);
 
-        // When
+        // Act
         List<User> users = userService.getAllUsers();
 
-        // Then
+        // Assert
         assertThat(users).hasSize(2);
+        assertThat(users.get(0).getCurrentRank()).isEqualTo(2);
+        assertThat(users.get(1).getCurrentRank()).isEqualTo(1);
     }
 
     // Switch status method
