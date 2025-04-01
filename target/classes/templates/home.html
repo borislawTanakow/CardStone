@@ -83,19 +83,20 @@
                                 </div>
                                 <div class="user-info">
                                     <p class="user-text">
-                                        UserName: <span th:text="${systemUsers.username}"></span>
+                                        UserName: <span th:text="${systemUsers.getUsername() + ' -> Rank '}"></span> <span th:text="${systemUsers.getCurrentRank()}"></span>
                                     </p>
                                     <p class="user-text">
                                         Name: <span th:text="${systemUsers.getFirstName()}"></span> <span th:text="${systemUsers.getLastName()}"></span>
                                     </p>
-                                </div>
-                                <div class="buttons-info">
-                                    <div class="cards">
-                                        <form th:action="@{'/battle/' + ${systemUsers.getId()}}" th:method="GET">
-                                            <button class="btn-outline-info btn">BATTLE</button>
-                                        </form>
+                                    <div class="buttons-info">
+                                        <div class="cards">
+                                            <form th:action="@{'/battle/' + ${systemUsers.getId()}}" th:method="GET">
+                                                <button class="btn-outline-info btn">BATTLE</button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
+
 
                         </li>
                     </ul>
