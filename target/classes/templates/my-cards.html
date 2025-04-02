@@ -38,7 +38,8 @@
 
                 <div class="card-content">
                     <h3 class="card-title" th:text="${systemCards.name}"></h3>
-                    <p class="card-description" th:text="${systemCards.description}"></p>
+                    <p class="card-description" th:text="${'POWER -> ' + systemCards.power}"></p>
+                    <p class="card-description" th:text="${'TYPE -> ' + systemCards.type}"></p>
                 </div>
 
                 <div class="card-actions">

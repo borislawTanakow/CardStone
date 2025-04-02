@@ -33,6 +33,7 @@ public class IndexController {
     @GetMapping("/register")
     public ModelAndView getRegisterPage() {
 
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("register");
         modelAndView.addObject("registerRequest", new RegisterRequest());

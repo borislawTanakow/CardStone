@@ -25,6 +25,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         http
                 .authorizeHttpRequests(matchers -> matchers
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                        .requestMatchers("/img/**").permitAll()
                         .requestMatchers("/", "/register").permitAll()
                         .anyRequest().authenticated()
                 )
