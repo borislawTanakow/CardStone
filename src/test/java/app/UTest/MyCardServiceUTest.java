@@ -19,8 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -65,21 +64,27 @@ public class MyCardServiceUTest {
     }
 
     @Test
-    void buyCard_InsufficientFunds_DoesNothing() throws BuyCardException {
+    void buyCard_InsufficientFunds_ThrowsException() {
         // Подготовка
         User user = new User();
         user.setStoneCoin(50);
 
         Card card = new Card();
         card.setPrice(100);
+        card.setName("TestCard");
 
         when(cardService.getById(any(UUID.class))).thenReturn(card);
 
-        // Изпълнение
-        myCardService.buyCard(UUID.randomUUID(), user);
+        //проверяваме BuyCardException
+        BuyCardException exception = assertThrows(BuyCardException.class, () -> {
+            myCardService.buyCard(UUID.randomUUID(), user);
+        });
 
-        // Проверки
+        // Проверка на съобщението
+        assertEquals("You don't have enough money for this card TestCard.", exception.getMessage());
+
         assertEquals(50, user.getStoneCoin());
+
         verifyNoInteractions(myCardRepository);
         verifyNoInteractions(userRepository);
     }

@@ -6,11 +6,14 @@
 <header th:replace="~{fragments/commons::nav}"></header>
 
 <main>
+    <!-- Секция за показване на съобщения за грешки -->
+    <div th:if="${buyCardErrorMessage}" class="alert alert-danger" role="alert"
+         th:text="${buyCardErrorMessage}"></div>
+
     <div class="welcome mt-1 mb-4">
         <p class="mySticky bg-gray text-dark user" th:text="${'Welcome, ' + user.username}"></p>
 
-        <div  th:text="${buyCardNoMoneyMessage}"></div>
-
+        <!-- Допълнително съдържание, ако има нужда, може да се добави тук -->
 
         <div class="row mt-1 mb-2">
             <!-- Gold Collection -->
@@ -23,13 +26,11 @@
                                 <img th:src="${systemCards.imageUrl}" alt="Regular Card" width="70px" height="70px">
                             </td>
                             <td class="my-cell-container">
-                                <div  th:text="${systemCards.name}"></div>
+                                <div th:text="${systemCards.name}"></div>
                                 <div>Power: <span th:text="${#numbers.formatInteger(systemCards.power, 0)}"></span> and Salary: <span th:text="${systemCards.price}"></span></div>
                                 <div class="buttons-info">
                                     <div class="cards">
-                                        <form
-                                                th:action="@{'/cards/buy-card/' + ${systemCards.id}}"
-                                                th:method="POST">
+                                        <form th:action="@{'/cards/buy-card/' + ${systemCards.id}}" th:method="POST">
                                             <button class="btn-outline-info btn">Buy</button>
                                         </form>
                                     </div>
@@ -50,13 +51,11 @@
                                 <img th:src="${systemCards.imageUrl}" alt="Regular Card" width="70px" height="70px">
                             </td>
                             <td class="my-cell-container">
-                                <div  th:text="${systemCards.name}"></div>
+                                <div th:text="${systemCards.name}"></div>
                                 <div>Power: <span th:text="${#numbers.formatInteger(systemCards.power, 0)}"></span> and Salary: <span th:text="${systemCards.price}"></span></div>
                                 <div class="buttons-info">
                                     <div class="cards">
-                                        <form
-                                                th:action="@{'/cards/buy-card/' + ${systemCards.id}}"
-                                                th:method="POST">
+                                        <form th:action="@{'/cards/buy-card/' + ${systemCards.id}}" th:method="POST">
                                             <button class="btn-outline-info btn">Buy</button>
                                         </form>
                                     </div>
@@ -77,13 +76,11 @@
                                 <img th:src="${systemCards.imageUrl}" alt="Regular Card" width="70px" height="70px">
                             </td>
                             <td class="my-cell-container">
-                                <div  th:text="${systemCards.name}"></div>
+                                <div th:text="${systemCards.name}"></div>
                                 <div>Power: <span th:text="${#numbers.formatInteger(systemCards.power, 0)}"></span> and Salary: <span th:text="${systemCards.price}"></span></div>
                                 <div class="buttons-info">
                                     <div class="cards">
-                                        <form
-                                                th:action="@{'/cards/buy-card/' + ${systemCards.id}}"
-                                                th:method="POST">
+                                        <form th:action="@{'/cards/buy-card/' + ${systemCards.id}}" th:method="POST">
                                             <button class="btn-outline-info btn">Buy</button>
                                         </form>
                                     </div>
