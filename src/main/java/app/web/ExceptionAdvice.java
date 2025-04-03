@@ -3,6 +3,7 @@ package app.web;
 import app.exception.BuyCardException;
 import app.exception.EmailAlreadyExistException;
 import app.exception.UsernameAlreadyExistException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MissingRequestValueException;
@@ -13,8 +14,8 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
-
 @ControllerAdvice
+@Slf4j
 public class ExceptionAdvice {
 
     // 1. (First) POST HTTP Request -> /register -> redirect:/register
@@ -43,18 +44,17 @@ public class ExceptionAdvice {
     }
 
     @ExceptionHandler(BuyCardException.class)
-    public String handleNoCoinsToBuy(RedirectAttributes redirectAttributes, BuyCardException exception) {
-   
-        String message = exception.getMessage();
+    public String handleBuyCardException(BuyCardException exception, RedirectAttributes redirectAttributes) {
+        log.error("Error when purchasing card: {}", exception.getMessage(), exception);
 
-        redirectAttributes.addFlashAttribute("buyCardNoMoneyMessage", message);
+        redirectAttributes.addFlashAttribute("buyCardErrorMessage", exception.getMessage());
         return "redirect:/shop";
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler({
-            AccessDeniedException.class, // Когато се опотва да достъпи ендпойнт, до който не му е позволено/нямам достъп
-            NoResourceFoundException.class, // Когато се опитва да достъпи невалиден ендпойнт
+            AccessDeniedException.class,
+            NoResourceFoundException.class,
             MethodArgumentTypeMismatchException.class,
             MissingRequestValueException.class
     })

@@ -19,8 +19,11 @@ public class DailyRewardScheduler {
     public void addDailyStoneCoins() {
         List<User> activeUsers = userRepository.findAll();
         for (User user : activeUsers) {
-            user.setStoneCoin(user.getStoneCoin() + 10);
-            userRepository.save(user);
+            if (user.isActive()) {
+                user.setStoneCoin(user.getStoneCoin() + 10);
+                userRepository.save(user);
+            }
         }
     }
+    //Искам да направя и метод който ако един потребител не е влизал повече от един месец да го прави неактивен.
 }

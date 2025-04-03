@@ -74,9 +74,6 @@ public class BattleService {
         saveMatchResult(user.getId(), "DRAW" , opponent.getUsername(), power, opponentPower, 20);
         saveMatchResult(opponent.getId(), "DRAW" , user.getUsername(), opponentPower, power, 20);
 
-        //TOOD logika kakvo pravim s pobeditelq ot macha example: vseki user da si ima kolekciq ot to4ki
-        //i pri bitka da se iz4izslqva kolko to4ki vzima pobeditelq na baza primerno 10% ot to4kite na zagubiliq
-        // a na zagubiliq po maluk procent primerno 5% ot to4kite gi gubi
 
 
         return null;

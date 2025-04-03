@@ -29,15 +29,18 @@ public class MyCardServiceImpl implements MyCardService {
 
     @Override
     public void buyCard(UUID cardId, User user) throws BuyCardException {
-
         Card card = this.cardService.getById(cardId);
         Integer price = card.getPrice();
         Integer stoneCoin = user.getStoneCoin();
 
         if (stoneCoin < price) {
-//            throw new BuyCardException("You don't have enough money for this card %s.".formatted(card.getName()));
-            return;
+            throw new BuyCardException(String.format("You don't have enough money for this card %s.", card.getName()));
         }
+
+        if (myCardRepository.existsByNameAndOwner(card.getName(), user)) {
+            throw new BuyCardException(String.format("You already own the card %s.", card.getName()));
+        }
+
         user.setStoneCoin(stoneCoin - price);
 
         MyCard cardToBuy = MyCard.builder()
@@ -49,9 +52,9 @@ public class MyCardServiceImpl implements MyCardService {
                 .type(card.getType())
                 .build();
 
+
         myCardRepository.save(cardToBuy);
         userRepository.save(user);
-
     }
 
 
