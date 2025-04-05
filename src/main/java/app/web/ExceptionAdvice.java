@@ -2,6 +2,7 @@ package app.web;
 
 import app.exception.BuyCardException;
 import app.exception.EmailAlreadyExistException;
+import app.exception.PasswordNotMatchException;
 import app.exception.UsernameAlreadyExistException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -40,6 +41,16 @@ public class ExceptionAdvice {
         String message = exception.getMessage();
 
         redirectAttributes.addFlashAttribute("emailAlreadyExistMessage", message);
+        return "redirect:/register";
+    }
+
+    @ExceptionHandler(PasswordNotMatchException.class)
+    public String handlePasswordNotMatch(RedirectAttributes redirectAttributes, PasswordNotMatchException exception) {
+
+
+        String message = exception.getMessage();
+
+        redirectAttributes.addFlashAttribute("passwordNotMatch", message);
         return "redirect:/register";
     }
 

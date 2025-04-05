@@ -4,6 +4,7 @@ import app.cards.model.MyCard;
 import app.deck.model.Deck;
 import app.deck.repository.DeckRepository;
 import app.exception.EmailAlreadyExistException;
+import app.exception.PasswordNotMatchException;
 import app.exception.UsernameAlreadyExistException;
 import app.security.AuthenticationMetadata;
 import app.user.model.RoleEnum;
@@ -57,6 +58,11 @@ public class UserService implements UserDetailsService {
         Optional<User> OptionalEmailUser = userRepository.findByEmail(registerRequest.getEmail());
         if (OptionalEmailUser.isPresent()) {
             throw new EmailAlreadyExistException("Email %s already exist.".formatted(registerRequest.getEmail()));
+        }
+
+        if (!registerRequest.getPassword().equals(registerRequest.getConfirmPassword())) {
+            throw new PasswordNotMatchException("Passwords do not match.");
+
         }
 
         User user = User.builder()
