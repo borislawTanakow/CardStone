@@ -31,10 +31,13 @@ public class User {
     @Column(unique = true, nullable = false)
     private String email;
 
+    @Column(name = "first_name")
     private String firstName;
 
+    @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "image_url")
     private String imageUrl;
 
     @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
@@ -44,13 +47,17 @@ public class User {
     @Enumerated(EnumType.STRING)
     private RoleEnum role;
 
-
+    @Column(name = "is_active")
     private boolean isActive;
 
+    @Column(name = "stone_Coin")
     private Integer stoneCoin;
 
+    @Column(name = "current_rank")
     private Integer currentRank;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Deck deck;
+
+    //TODO energy трябва да добавя енергия за битки която на всеки нов ден да се рестартира
 }

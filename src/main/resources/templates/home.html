@@ -69,7 +69,7 @@
 
             <div class="col-6 mt-1 mb-1">
                 <div class="home-fields" style="height: 40vh; overflow: auto">
-                    <h3 class="profiles">All other Players</h3>
+                    <h3 class="profiles">All Players</h3>
                     <ul class="list-group list-group-vertical text-dark">
                         <li th:each="systemUsers : ${allUsers}"
                             th:if="${systemUsers != null and systemUsers.id != user.id}">

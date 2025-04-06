@@ -36,7 +36,7 @@ public class CardController {
 
         myCardService.addCardToDeck(id, user);
 
-        return "redirect:/home";
+        return "redirect:/my-cards";
     }
 
     @DeleteMapping("/{id}")

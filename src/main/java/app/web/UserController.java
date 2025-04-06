@@ -55,7 +55,7 @@ public class UserController {
 
         userService.editProfile(editProfileRequest, user);
 
-        return "redirect:/home";
+        return "redirect:/profile";
     }
 
 

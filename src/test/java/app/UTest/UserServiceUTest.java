@@ -4,6 +4,7 @@ import app.cards.model.MyCard;
 import app.deck.model.Deck;
 import app.deck.repository.DeckRepository;
 import app.exception.EmailAlreadyExistException;
+import app.exception.PasswordNotMatchException;
 import app.exception.UsernameAlreadyExistException;
 import app.user.model.RoleEnum;
 import app.user.model.User;
@@ -161,6 +162,7 @@ public class UserServiceUTest {
         registerRequest.setUsername("testUser");
         registerRequest.setEmail("test@example.com");
         registerRequest.setPassword("password123");
+        registerRequest.setConfirmPassword("password123");
 
         when(userRepository.findByUsername(registerRequest.getUsername())).thenReturn(Optional.empty());
         when(userRepository.findByEmail(registerRequest.getEmail())).thenReturn(Optional.empty());
@@ -170,6 +172,22 @@ public class UserServiceUTest {
 
         verify(userRepository, times(1)).save(any(User.class));
         verify(deckRepository, times(1)).save(any(Deck.class));
+    }
+    @Test
+    void registerUser_ShouldThrowPasswordNotMatchException_WhenPasswordsDoNotMatch() {
+        RegisterRequest registerRequest = new RegisterRequest();
+        registerRequest.setUsername("testUser");
+        registerRequest.setEmail("test@example.com");
+        registerRequest.setPassword("password123");
+        registerRequest.setConfirmPassword("passwordDif");
+
+        when(userRepository.findByUsername(registerRequest.getUsername())).thenReturn(Optional.empty());
+        when(userRepository.findByEmail(registerRequest.getEmail())).thenReturn(Optional.empty());
+
+        assertThrows(PasswordNotMatchException.class, () -> userService.registerUser(registerRequest));
+
+        verify(userRepository, never()).save(any(User.class));
+        verify(deckRepository, never()).save(any(Deck.class));
     }
     @Test
     void getById_WhenUserExists_ShouldReturnUser() {

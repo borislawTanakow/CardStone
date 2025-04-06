@@ -37,6 +37,7 @@
             </div>
             <input type="password" class="form-control" id="password" name="password" th:field="*{password}"/>
             <small th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="bg-danger text-light rounded">Password error message</small>
+            <small th:text="${passwordNotMatch}" class="bg-danger text-light rounded">Email error message</small>
         </div>
 
         <div class="form-group">
@@ -45,6 +46,7 @@
             </div>
             <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" th:field="*{confirmPassword}"/>
             <small th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" class="bg-danger text-light rounded">Confirm Password error message</small>
+            <small th:text="${passwordNotMatch}" class="bg-danger text-light rounded">Email error message</small>
         </div>
 
         <div class="button-holder d-flex justify-content-center">
