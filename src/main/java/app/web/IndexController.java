@@ -5,6 +5,8 @@ import app.web.dto.LoginRequest;
 import app.web.dto.RegisterRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,10 +57,17 @@ public class IndexController {
 
     }
 
+
     @GetMapping("/login")
-    public ModelAndView getLoginPage(@RequestParam(value = "error", required = false) String errorParam) {
-
-
+    public ModelAndView getLoginPage(Authentication authentication,
+                                     @RequestParam(value = "error", required = false) String errorParam) {
+        // Проверяваме дали има аутентикация и дали тя не е анонимна
+        if (authentication != null
+                && authentication.isAuthenticated()
+                && !(authentication instanceof AnonymousAuthenticationToken)) {
+            // Ако потребителят е логнат, го пренасочваме към /home
+            return new ModelAndView("redirect:/home");
+        }
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("login");
@@ -70,6 +79,7 @@ public class IndexController {
 
         return modelAndView;
     }
+
 
 
 

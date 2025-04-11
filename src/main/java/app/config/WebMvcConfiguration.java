@@ -13,32 +13,35 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableMethodSecurity
 public class WebMvcConfiguration implements WebMvcConfigurer {
 
-    // SecurityFilterChain - начин, по който Spring Security разбира как да се прилага за нашето приложение
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
-        // authorizeHttpRequests - конфиг. за група от ендпойнти
-        // requestMatchers - достъп до даден ендпойнт
-        // .permitAll() - всеки може да достъпи този ендпойнт
-        // .anyRequest() - всички заявки, които не съм изброил
-        // .authenticated() - за да имаш достъп, трябва да си аутентикиран
         http
                 .authorizeHttpRequests(matchers -> matchers
+                        // Статични ресурси са достъпни за всички
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers("/img/**").permitAll()
-                        .requestMatchers("/", "/register").permitAll()
+                        // URL-та за анонимни потребители (неаутентикирани)
+                        .requestMatchers("/", "register").anonymous()
+                        .requestMatchers("/login").anonymous()
+                        // Всички останали заявки изискват аутентикация
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
-//                        .usernameParameter("username")
-//                        .passwordParameter("password")
                         .defaultSuccessUrl("/home", true)
                         .failureUrl("/login?error")
-                        .permitAll())
+                        .permitAll()
+                )
                 .logout(logout -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
                         .logoutSuccessUrl("/")
+                )
+                // Ако аутентикиран потребител се опита да достъпи страниците за анонимни потребители,
+                // ги пренасочваме към /home
+                .exceptionHandling(exception -> exception
+                        .accessDeniedHandler((request, response, accessDeniedException) -> {
+                            response.sendRedirect("/home");
+                        })
                 );
 
         return http.build();
